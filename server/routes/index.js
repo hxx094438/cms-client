@@ -1,4 +1,8 @@
-const Router = require('koa-router')
+const router = require('koa-router')()
+const controller = require('../controller/index.js')
 
-const router = new Router
+router.get('/article',controller.getArticle)
+router.get('/login',controller.getLogin)
 
+
+module.exports = router
