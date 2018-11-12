@@ -6,26 +6,29 @@ const db = require('../model/db')
 const sha1 = require('sha1')
 
 exports.getLogin = async ctx => {
-  let request = ctx.request,
-    query = request.query,
-    verify = false;
-    // User.findPostCountByName(name)
-    // .then(result => {
-    //   postCount = result[0].count
-    // })
-    db.User.findOne({name:query.name}, (err,doc) => {
+    const { name,password} = ctx.request.body
+
+    console.log(`账号:${name},密码:${password}`)
+    db.User.findOne({name:name}, (err,doc) => {
     if(err) {
       console.log(err)
     } else if (doc) {
-      if(doc.password === sha1(query.password + doc.salt)) {
-        console.log('密码正确')
-        verify = true
+      // if(doc.password === sha1(query.password + doc.salt)) {
+      //   console.log('密码正确')
+      //   verify = true
+      // }
+      let password = doc.password
+      ctx.body = {
+        password
       }
+
     }
   })
 
+  let html =     '<p>你好</p>'
+
   ctx.body = {
-    verify,
+    html
   }
 }
 

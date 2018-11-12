@@ -2,18 +2,17 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-10-28 15:51:57 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2018-11-06 00:28:54
+ * @Last Modified time: 2018-11-12 21:45:22
  */
 
 const path = require('path')
 
 // 生产环境配置
 module.exports = {
-
     // 应用配置
     app: {
         name: 'koa-blog',
-        port: 3000,
+        port: 3002,
         // 后台路径
         apiPath: '/api'
     },
