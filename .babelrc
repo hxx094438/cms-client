@@ -9,13 +9,10 @@
             }
         ]
     ],
-    "plugins":[
-        [
-            "transform-runtime",{
-                "polyfill":false,
-                "regenerator":true
-            }
-        ]
+    "plugins": [
+      "transform-runtime",
+      "transform-decorators-legacy",
+      "transform-class-properties"
     ]
     
     
