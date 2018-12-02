@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const article = mongoose.model('Movie')
+const article = mongoose.model('Article')
 
 export const getAllArticles = async (type, year) => {
   let query = {}

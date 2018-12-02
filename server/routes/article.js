@@ -7,7 +7,7 @@ import{
   Controller,
   Get,
   Required
-} from '../lib/decorator'
+} from '../decorator/router'
 
 import {
   getAllArticles

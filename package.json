@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/index.js",
+    "dev": "rm -rf dist && rm -rf .cache && NODE_ENV=development nodemon ./start.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "hxx",
@@ -16,12 +17,14 @@
     "joi-objectid": "^2.0.0",
     "koa": "^2.6.1",
     "koa-bodyparser": "^4.2.1",
+    "koa-logger": "^3.2.0",
     "koa-onerror": "^4.1.0",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "loadsh": "^0.0.3",
     "mongoose": "^5.3.7",
     "path": "^0.12.7",
+    "ramda": "^0.26.1",
     "sha1": "^1.1.1"
   },
   "devDependencies": {
@@ -30,11 +33,14 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
     "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
-    "babel-polyfill": "^6.26.0",
-    "babel-register": "^6.26.0"
+    "babel-register": "^6.26.0",
+    "nodemon": "^1.18.7"
   },
   "repository": {
     "type": "git",

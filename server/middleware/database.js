@@ -1,7 +1,7 @@
 import { join } from 'path'
 import mongoose from 'mongoose'
 import glob from 'glob'
-import config from '../config'
+import config from '../config/index'
 
 mongoose.Promise = global.Promise
 
@@ -14,9 +14,9 @@ export const database = app => {
     mongoose.set('debug', true)
   }
 
-  mongoose.connect(mongoConfig.url, {
+ /*  mongoose.connect(mongoConfig.url, {
     useMongoClient: true
-  })
+  }) */
 
   mongoose.connection.on('disconnected', () => {
     mongoose.connect(mongoConfig.url, {
@@ -29,6 +29,6 @@ export const database = app => {
   })
 
   mongoose.connection.once('open', () => {
-    console.log('Connected to MongoDB -> ', db)
+    console.log('Connected to MongoDB -> ', mongoConfig.url)
   })
 }

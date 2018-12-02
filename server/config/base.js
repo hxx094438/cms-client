@@ -2,13 +2,13 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-10-28 15:51:57 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2018-11-12 21:45:22
+ * @Last Modified time: 2018-12-02 18:57:46
  */
 
 const path = require('path')
 
 // 生产环境配置
-module.exports = {
+export default {
     // 应用配置
     app: {
         name: 'koa-blog',

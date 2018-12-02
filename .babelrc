@@ -1,19 +1,10 @@
 {
-    "preset":[
-        [
-            "env",
-            {
-                "targets":{
-                    "node":"current"
-                }
-            }
-        ]
-    ],
-    "plugins": [
-      "transform-runtime",
-      "transform-decorators-legacy",
-      "transform-class-properties"
-    ]
+  "presets": ["es2015", "stage-0", "react"],
+  "plugins": [
+    "transform-runtime",
+    "transform-decorators-legacy",
+    "transform-class-properties"
+  ]                 
     
     
 }
