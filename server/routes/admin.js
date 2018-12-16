@@ -8,7 +8,7 @@ import {
 } from '../decorator/router'
 import { checkPassword } from '../service/admin'
 
-@Controller('/admin')
+@Controller('/admin') // 赋值原型上的symbolPrefix
 export default class AdminRouter {
   @Post('/login')
   @Required({

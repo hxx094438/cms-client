@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-11-24 14:57:29 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2018-12-02 19:11:53
+ * @Last Modified time: 2018-12-16 23:31:56
  */
 
 import KoaRouter from 'koa-router'
@@ -11,11 +11,19 @@ import glob from 'glob'
 import R from 'ramda'
 
 const symbolPrefix = Symbol('prefix')
-const routerMap = new Map()
-const normalizePath = path => path.startsWith('/') ? path : `/${path}`
-
+const routeMap = []
 let logTimes = 0
 
+// const normalizePath = path => path.startsWith('/') ? path : `/${path}`
+const resolvePath = R.unless(
+  R.startsWith('/'),
+  R.curryN(2, R.concat)('/')
+)
+
+const changeToArr = R.unless(
+  R.is(Array),
+  R.of
+)
 
 export class Route {
   constructor(app, apiPath) {
@@ -23,28 +31,17 @@ export class Route {
     this.apiPath = apiPath
     this.router = new KoaRouter()
   }
-  // init() {
-  //   const {app , router, apiPath } = this
-  //   glob.sync(resolve(apiPath,'./**/*.js')).forEach(require)
-  //   for( let [conf, controller] of routerMap) {
-  //     const controllers = Array.isArray(controller) ? controller : [controller]
-  //     const prefixPath = conf.target[symbolPrefix]
-  //     if(prefixPath) prefixPath = normalizePath(prefixPath)
-  //     const routerPath = prefixPath + conf.path
-  //     router[conf.methods](routerPath, ...controllers)
-  //   }
-  //   app.use(router.routes())
-  //   app.use(router.allowedMethods())
-  // }
 
   init = () => {
     const { app, router, apiPath } = this
 
     glob.sync(resolve(apiPath, './*.js')).forEach(require)
+    console.log(apiPath,'哈哈哈')
 
     R.forEach(
       ({ target, method, path, callback }) => {
-        const prefix = resolvePath(target[pathPrefix])
+        const prefix = resolvePath(target[symbolPrefix])
+        console.log('prefix',prefix)
         router[method](prefix + path, ...callback)
       }
     )(routeMap)
@@ -55,12 +52,16 @@ export class Route {
 
 }
 
-const router = conf => (target, key, descriptor) => {
-  conf.path = normalizePath(conf.path)
-  routerMap.set({
-    target:target,
-    ...conf
-  },target[key])
+export const setRouter = method => path => (target, key, descriptor) => {
+  routeMap.push({
+    target,
+    method,
+    path: resolvePath(path),
+    callback: changeToArr(target[key])
+  })
+
+  console.log('changeToArr',target[key],'changeToArr',changeToArr(target[key]))
+  return descriptor
 }
 
 export const convert = middleware => (target, key, descriptor) => {
@@ -73,37 +74,15 @@ export const convert = middleware => (target, key, descriptor) => {
   return descriptor
 }
 
-export const controller = path => target => (target.prototype[symbolPrefix] = path)
+export const Controller = path => target => (target.prototype[symbolPrefix] = path)
 
-export const get = path => router({
-  methods:'get',
-  path: path
-})
+export const Get = setRouter('get')
 
-export const post = path => router({
-  methods:'put',
-  path: path
-})
+export const Post = setRouter('post')
 
-export const del = path => router({
-  methods:'del',
-  path: path
-})
+export const Put = setRouter('put')
 
-export const put = path => router({
-  methods:'put',
-  path: path
-})
-
-export const use = path => router({
-  methods:'use',
-  path: path
-})
-
-export const all = path => router({
-  methods:'all',
-  path: path
-})
+export const Delete = setRouter('delete')
 
 export const Log = convert(async (ctx, next) => {
   logTimes++

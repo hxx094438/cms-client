@@ -8,6 +8,7 @@ mongoose.Promise = global.Promise
 glob.sync(join(__dirname, '../database/schema', '**/*.js')).forEach(require)
 
 export const database = app => {
+  
   const { mongoConfig } = config
 
   if (config.env === 'development') {

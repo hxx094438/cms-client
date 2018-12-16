@@ -16,7 +16,7 @@ import {
 
 @Controller('/api/articles')
 export class articleController {
-  @get('/')
+  @Get('/')
   async getArticles(ctx, next) {
     const Article = mongoose.model('article')
     const articles = await getAllArticles.find({})

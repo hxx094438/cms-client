@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-10-28 15:24:14 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2018-12-02 19:26:14
+ * @Last Modified time: 2018-12-15 20:28:17
  */
 
 // const config = require('./config/index')
@@ -38,13 +38,13 @@ const useMiddlewares = (app) => {
 }
 
 ;(async function () {
-  mongoose.connect(config.mongoConfig.url, {useNewUrlParser: true}, (err) => {
-    if (err) {
-      console.log(err)
-    } else {
-      console.log('Connection success!')
-    }
-  })
+  // mongoose.connect(config.mongoConfig.url, {useNewUrlParser: true}, (err) => {
+  //   if (err) {
+  //     console.log(err)
+  //   } else {
+  //     console.log('Connection success!')
+  //   }
+  // })
   /**
    * 将config注入中间件的ctx
    * */
