@@ -15,7 +15,7 @@ import {
 
 
 @Controller('/api/articles')
-export class articleController {
+export class ArticleRouter {
   @Get('/')
   async getArticles(ctx, next) {
     const Article = mongoose.model('article')

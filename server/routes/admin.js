@@ -8,30 +8,29 @@ import {
 } from '../decorator/router'
 import { checkPassword } from '../service/admin'
 
-@Controller('/admin') // 赋值原型上的symbolPrefix
+@Controller('/api/admin')
 export default class AdminRouter {
   @Post('/login')
   @Required({
-    body: ['name', 'password']
+    body: ['email', 'password']
   })
   @Auth
   async adminLogin (ctx, next) {
-    const { name, password } = ctx.request.body
-    const data = await checkPassword(name, password)
+    const { email, password } = ctx.request.body
+    const data = await checkPassword(email, password)
     const { user, match } = data
 
     if (match) {
       ctx.session.user = {
         _id: user._id,
-        name: user.name,
+        email: user.email,
         role: user.role,
         username: user.username
       }
-
       return (ctx.body = {
         success: true,
         data: {
-          name: user.name,
+          email: user.email,
           username: user.username
         }
       })

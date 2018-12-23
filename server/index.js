@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-10-28 15:24:14 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2018-12-15 20:28:17
+ * @Last Modified time: 2018-12-21 21:08:54
  */
 
 // const config = require('./config/index')
@@ -13,8 +13,6 @@
 // const mongoose = require('mongoose')
 // const router = require('koa-router')
 import { join } from 'path'
-
-
 import Koa from 'koa'
 import R from 'ramda'
 import chalk from 'chalk'

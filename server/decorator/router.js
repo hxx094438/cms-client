@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-11-24 14:57:29 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2018-12-16 23:31:56
+ * @Last Modified time: 2018-12-23 23:02:25
  */
 
 import KoaRouter from 'koa-router'
@@ -26,30 +26,30 @@ const changeToArr = R.unless(
 )
 
 export class Route {
+  
   constructor(app, apiPath) {
     this.app = app
     this.apiPath = apiPath
     this.router = new KoaRouter()
   }
 
-  init = () => {
+  init = ()=> {
     const { app, router, apiPath } = this
-
+    
     glob.sync(resolve(apiPath, './*.js')).forEach(require)
-    console.log(apiPath,'哈哈哈')
-
+    // console.log(apiPath,'哈哈哈') 
+    // console.log('routeMap',routeMap)
     R.forEach(
       ({ target, method, path, callback }) => {
         const prefix = resolvePath(target[symbolPrefix])
-        console.log('prefix',prefix)
+        // console.log('prefix',prefix+path)
         router[method](prefix + path, ...callback)
       }
     )(routeMap)
-
+  
     app.use(router.routes())
     app.use(router.allowedMethods())
   }
-
 }
 
 export const setRouter = method => path => (target, key, descriptor) => {
@@ -59,10 +59,14 @@ export const setRouter = method => path => (target, key, descriptor) => {
     path: resolvePath(path),
     callback: changeToArr(target[key])
   })
-
-  console.log('changeToArr',target[key],'changeToArr',changeToArr(target[key]))
   return descriptor
 }
+
+/**
+ * 
+ * @param {fn} middleware 
+ * 将函数转化为数组中间件
+ */
 
 export const convert = middleware => (target, key, descriptor) => {
   target[key] = R.compose(
