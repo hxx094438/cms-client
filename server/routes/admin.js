@@ -1,4 +1,3 @@
-import mongoose from 'mongoose'
 import {
   Controller,
   Post,
@@ -8,29 +7,34 @@ import {
 } from '../decorator/router'
 import { checkPassword } from '../service/admin'
 
+
+
 @Controller('/api/admin')
 export default class AdminRouter {
   @Post('/login')
   @Required({
-    body: ['email', 'password']
+    body: ['name', 'password']
   })
-  @Auth
+  // @Auth
   async adminLogin (ctx, next) {
-    const { email, password } = ctx.request.body
-    const data = await checkPassword(email, password)
-    const { user, match } = data
+    console.log('ctx','撒的撒的撒的撒的旦撒旦撒')
 
+    const { name, password } = ctx.request.body
+
+    const data = await checkPassword(name, password)
+    const { user, match } = data
     if (match) {
+
       ctx.session.user = {
         _id: user._id,
-        email: user.email,
+        name: user.name,
         role: user.role,
         username: user.username
       }
       return (ctx.body = {
         success: true,
         data: {
-          email: user.email,
+          name: user.name,
           username: user.username
         }
       })

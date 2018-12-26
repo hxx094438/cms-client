@@ -13,14 +13,18 @@ const UserSchema = new Schema(
 
 
 UserSchema.methods = {
-  comparePassword: function (_password, password) {
+  comparePassword:  (_password, password) => {
     return new Promise((resolve, reject) => {
-      bcrypt.compare(_password, password, function (err, isMatch) {
+      bcrypt.compare(_password, password,  (err, isMatch) => {
         if (!err) resolve(isMatch)
         else reject(err)
       })
     })
-  }
+  },
+
+
+
+
 }
 
-mongoose.model('User', UserSchema)
+module.exports = mongoose.model('User', UserSchema)

@@ -35,14 +35,15 @@ export class Route {
 
   init = ()=> {
     const { app, router, apiPath } = this
-    
+    // console.log('routeMap',routeMap)
+
     glob.sync(resolve(apiPath, './*.js')).forEach(require)
-    // console.log(apiPath,'哈哈哈') 
+    // console.log(apiPath,'哈哈哈')
     // console.log('routeMap',routeMap)
     R.forEach(
       ({ target, method, path, callback }) => {
         const prefix = resolvePath(target[symbolPrefix])
-        // console.log('prefix',prefix+path)
+        console.log('挂载router')
         router[method](prefix + path, ...callback)
       }
     )(routeMap)
@@ -103,7 +104,7 @@ export const Log = convert(async (ctx, next) => {
  */
 export const Required = paramsObj => convert(async (ctx, next) => {
   let errs = []
-
+  // console.log('ctx',ctx.request)
   R.forEachObjIndexed(
     (val, key) => {
       errs = errs.concat(
@@ -127,6 +128,7 @@ export const Required = paramsObj => convert(async (ctx, next) => {
 })
 
 export const Auth = convert(async (ctx, next) => {
+  console.log('auth自动登录',ctx.session)
   if (!ctx.session.user) {
     return (
       ctx.body = {
