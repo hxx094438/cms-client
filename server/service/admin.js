@@ -1,3 +1,10 @@
+/*
+ * @Author: huangxiaoxun 
+ * @Date: 2018-12-28 01:03:28 
+ * @Last Modified by: huangxiaoxun
+ * @Last Modified time: 2018-12-28 01:40:42
+ */
+
 import sha1 from 'sha1'
 import rand from 'csprng'
 import User from '../database/schema/user'
