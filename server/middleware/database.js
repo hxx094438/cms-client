@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import glob from 'glob'
 import config from '../config/index'
 import chalk from 'chalk'
+import { seed} from '../service/admin'
 
 
 mongoose.Promise = global.Promise
@@ -26,6 +27,7 @@ export const database = app => {
   })
 
   mongoose.connection.once('open', () => {
+    seed()
     console.log(`Connected to MongoDB -> ${chalk.green(mongoConfig.url)}`)
   })
 }

@@ -1,6 +1,6 @@
-import mongoose from 'mongoose'
-
-const User = mongoose.model('User')
+import sha1 from 'sha1'
+import rand from 'csprng'
+import User from '../database/schema/user'
 
 
 export const checkPassword = async (name, password) => {
@@ -29,21 +29,33 @@ export const findOne = async(name = null) => {
     console.log(e)
   }
   //toObject  mongodb api
-  return result && result.toObject()
+  return result
 }
 
 export const seed = async () => {
-  let user = null
+  let user = null,
+    result = null
 
-  try {
     user = await findOne()
 
     if(user === null ) {
-      user = new User()
+      const salt = rand(160, 36)
+      console.log('user null')
+      user = new User({
+        name: 'admin',
+        password: sha1('admin' + salt),
+        salt: salt,
+      })
+      try {
+        result = user.save()
+      } catch (e) {
+        console.log(e)
+        throw e
+      }
+      console.log('result',result)
+      return result
     }
 
-
-  }
 
 
 }
