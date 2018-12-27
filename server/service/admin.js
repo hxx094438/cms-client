@@ -2,41 +2,55 @@ import sha1 from 'sha1'
 import rand from 'csprng'
 import User from '../database/schema/user'
 
+class UserService {
+  async checkPassword (name, password) {
+    let match = false
+    let user = await this.findOne(name)
+    console.log('checkuser',user)
+    if (user) {
+      match = await user.comparePassword(password, user)
+    }
 
-export const checkPassword = async (name, password) => {
-  let match = false
-  let user = await findOne(name)
-  console.log('checkuser',user)
-  if (user) {
-    match = await user.comparePassword(password, user.password)
+    return {
+      match,
+      user
+    }
   }
 
-  return {
-    match,
-    user
+  async findOne (name = null) {
+    let searchParam = {},result
+
+    if( name) {
+      searchParam.name = name
+    }
+
+    try{
+      result = await User.findOne(searchParam).exec()
+    } catch (e) {
+      console.log(e)
+    }
+    return result
   }
-}
 
-export const findOne = async(name = null) => {
-  let searchParam = {},result
-
-  if( name) {
-    searchParam.name = name
+  async update (id ,params){
+    let result = null
+    try {
+      result = await User.findByIdAndUpdate(id, {
+        $set: params
+      }, {
+        new: true
+      }).exec()
+    } catch (e) {
+      console.log(e)
+      throw e
+    }
+    return result
   }
-  try{
-    result = await User.findOne(searchParam).exec()
-  } catch (e) {
-    console.log(e)
-  }
-  //toObject  mongodb api
-  return result
-}
 
-export const seed = async () => {
-  let user = null,
-    result = null
 
-    user = await findOne()
+  async seed() {
+    let user = await this.findOne()
+    let result = null
 
     if(user === null ) {
       const salt = rand(160, 36)
@@ -55,7 +69,11 @@ export const seed = async () => {
       console.log('result',result)
       return result
     }
-
-
+  }
 
 }
+
+module.exports = new UserService()
+
+
+

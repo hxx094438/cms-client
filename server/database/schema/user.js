@@ -1,5 +1,9 @@
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema
+import sha1 from 'sha1'
+
+const MAX_LOGIN_ATTEMPTS = 3
+const LOCK_TIME = 30 * 1000
 
 
 const UserSchema = new Schema(
@@ -15,6 +19,7 @@ const UserSchema = new Schema(
     from: String,
     gender: String,
     songList: Object,
+    lockUntil: Number,
     meta: {
       createdAt: {
         type: Date,
@@ -35,17 +40,61 @@ const UserSchema = new Schema(
 )
 
 
+UserSchema.virtual('isLocked').get(function () {
+  return !!(this.lockUntil && this.lockUntil > Date.now())
+})
+
+
 UserSchema.methods = {
-  comparePassword: (_password, password) => {
+
+  /**
+   * 登录限制
+   * @param user
+   * @returns {Promise}
+   */
+  incLoginAttempts: (user) => {
     return new Promise((resolve, reject) => {
-      bcrypt.compare(_password, password, (err, isMatch) => {
-        if (!err) resolve(isMatch)
-        else reject(err)
-      })
+      if (this.lockUntil && this.lockUntil < Date.now()) {
+        this.update({
+          $set: {
+            loginAttempts: 1
+          },
+          $unset: {
+            lockUntil: 1
+          }
+        }, function (err) {
+          if (!err) resolve(true)
+          else reject(err)
+        })
+      } else {
+        let updates = {
+          $inc: {
+            loginAttempts: 1
+          }
+        }
+
+        if (this.loginAttempts + 1 >= MAX_LOGIN_ATTEMPTS && !this.isLocked) {
+          updates.$set = {
+            lockUntil: Date.now() + LOCK_TIME
+          }
+        }
+
+        this.update(updates, err => {
+          if (!err) resolve(true)
+          else reject(err)
+        })
+      }
     })
   },
 
 
+  comparePassword: (_password, user) => {
+    return new Promise((resolve, reject) => {
+      const salt = user.salt
+      console.log('密码比较',user.password === sha1(_password + salt))
+      resolve(user.password === sha1(_password + salt))
+    })
+  },
 }
 
 module.exports = mongoose.model('User', UserSchema)

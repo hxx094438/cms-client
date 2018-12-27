@@ -5,7 +5,7 @@ import {
   Get,
   Required,
 } from '../decorator/router'
-import { checkPassword } from '../service/admin'
+import UserService from '../service/admin'
 
 
 
@@ -21,7 +21,7 @@ export default class AdminRouter {
 
     const { name, password } = ctx.request.body
 
-    const data = await checkPassword(name, password)
+    const data = await UserService.checkPassword(name, password)
     const { user, match } = data
     if (match) {
 
@@ -45,4 +45,11 @@ export default class AdminRouter {
       err: '密码错误'
     })
   }
+
+
+
+
+
+
+
 }

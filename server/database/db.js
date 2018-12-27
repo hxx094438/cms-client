@@ -8,7 +8,7 @@ import UserService from '../service/admin'
 // 初始化数据
 const initialize = () => {
   console.log('beginning to initialize data...')
-
+  //
   UserService.seed()
 
 /*

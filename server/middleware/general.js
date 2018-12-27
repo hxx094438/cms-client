@@ -14,6 +14,8 @@ export const addLogger = app => {
 
 export const addError = app => {
 
+
+
   onerror(app, {
     json (err) {
       Object.keys(err).reduce((body, key) => {
