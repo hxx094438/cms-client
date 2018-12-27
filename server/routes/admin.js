@@ -1,3 +1,8 @@
+/**
+ * @author Huangxiaoxun<hxx09448@gmail.com>
+ * @date 2018/11/19
+*/
+
 import {
   Controller,
   Post,
@@ -5,6 +10,8 @@ import {
   Get,
   Required,
 } from '../decorator/router'
+import sha1 from 'sha1'
+import rand from 'csprng'
 import UserService from '../service/admin'
 
 
@@ -17,8 +24,7 @@ export default class AdminRouter {
   })
   // @Auth
   async adminLogin (ctx, next) {
-    console.log('ctx','撒的撒的撒的撒的旦撒旦撒')
-
+    console.log('login','ctx', ctx.request)
     const { name, password } = ctx.request.body
 
     const data = await UserService.checkPassword(name, password)
@@ -38,12 +44,49 @@ export default class AdminRouter {
           username: user.username
         }
       })
+    } else {
+      return (ctx.body = {
+        success: false,
+        err: '密码错误'
+      })
+    }
+  }
+
+  @Post('/modify')
+  @Required({
+    body: ['name', 'oldVal', 'newVal']
+  })
+  async adminLogin(ctx, next) {
+    // console.log('login','ctx', ctx.request)
+    const { name, oldVal, newVal } = ctx.request.body
+    const { user, match } = await UserService.checkPassword(name, oldVal)
+    // console.log('user',user)
+    console.log('match',match)
+    if(match) {
+      console.log('修改密码')
+      const salt = rand(160, 36)
+      try {
+        let doc = await UserService.update( user._id, {
+          name: user.name,
+          password: sha1('admin' + salt),
+          salt: salt
+        })
+        console.log('doc',doc)
+        return (ctx.body = {
+          success: true,
+          data: {}
+        })
+      } catch (e) {
+        console.log(e)
+        throw e
+      }
+    } else {
+      return (ctx.body = {
+        success: false,
+        err: '密码错误'
+      })
     }
 
-    return (ctx.body = {
-      success: false,
-      err: '密码错误'
-    })
   }
 
 

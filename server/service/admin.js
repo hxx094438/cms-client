@@ -1,3 +1,8 @@
+/**
+ * @author Huangxiaoxun<hxx09448@gmail.com>
+ * @date 2018/12/27
+*/
+
 import sha1 from 'sha1'
 import rand from 'csprng'
 import User from '../database/schema/user'
@@ -6,7 +11,7 @@ class UserService {
   async checkPassword (name, password) {
     let match = false
     let user = await this.findOne(name)
-    console.log('checkuser',user)
+    // console.log('checkuser',user)
     if (user) {
       match = await user.comparePassword(password, user)
     }
@@ -32,7 +37,14 @@ class UserService {
     return result
   }
 
-  async update (id ,params){
+  /**
+   * 
+   * @param id  user._id
+   * @param params  {_id:'',name:''}
+   * @returns {Promise.<*>}
+   */
+  
+  async update ( id ,params){
     let result = null
     try {
       result = await User.findByIdAndUpdate(id, {

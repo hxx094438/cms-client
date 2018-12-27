@@ -1,3 +1,8 @@
+/**
+ * @author Huangxiaoxun<hxx09448@gmail.com>
+ * @date 2018/11/27 
+*/
+
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 import sha1 from 'sha1'
@@ -91,7 +96,7 @@ UserSchema.methods = {
   comparePassword: (_password, user) => {
     return new Promise((resolve, reject) => {
       const salt = user.salt
-      console.log('密码比较',user.password === sha1(_password + salt))
+      // console.log('密码比较',user.password === sha1(_password + salt))
       resolve(user.password === sha1(_password + salt))
     })
   },

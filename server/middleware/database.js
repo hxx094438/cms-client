@@ -1,3 +1,8 @@
+/**
+ * @author Huangxiaoxun<hxx09448@gmail.com>
+ * @date 2018/11/27 
+*/
+
 import { join } from 'path'
 import mongoose from 'mongoose'
 import glob from 'glob'
