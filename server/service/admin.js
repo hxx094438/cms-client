@@ -45,7 +45,7 @@ class UserService {
    * @returns {Promise.<*>}
    */
   
-  async update ( id ,params){
+  async update ( id ,params) {
     let result = null
     console.log('update方法')
     try {

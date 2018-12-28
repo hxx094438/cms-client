@@ -17,43 +17,48 @@ class ArticleService {
    * @param {opt} param0
    * 
    */
-  async getAllArticles({
+  async getAllArticle({
     value,  //tags
     limit,  //最大值
     skip  // 页码
   }) {
+
     let _articles = {}
     //文章总数
-    _articles.total = await Article.count({
-      isPublish: true
-    }).exec((err, count) => {
-      if(err) {
-        console(err) 
-      } else {
-        return Math.ceil(count / limit)
-      }
-    })
+    try {
+      _articles.total = await Article.countDocuments({
+        isPublish: true
+      }).exec()
+    } catch (e) {
+      console.log(e)
+      throw e
+    }
+
     if (value && value !== '全部') {
-      Article.find({
+      try {
+        _articles.articles = await Article.find({
           tags: value,
           isPublish: true
         }).sort({
           date: -1
         }).limit(limit).skip(skip).exec()
-        .then((articles) => {
-          _articles.articles = articles
-        }).catch(err => console.log(err))
+      } catch (e) {
+        console.log(e)
+        throw e
+      }
     } else {
-      Article.find({
+      try{
+        _articles.articles = await Article.find({
           isPublish: true
         }).sort({
           date: -1
         }).limit(limit).skip(skip).exec()
-        .then((articles) => {
-          _articles.articles = articles
-        }).catch(err => console.log(err))
+      } catch (e) {
+        console.log(e)
+        throw e
+      }
     }
-    return _articles
+    return Promise.resolve(_articles)
   }
 }
 

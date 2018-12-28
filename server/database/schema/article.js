@@ -18,7 +18,7 @@ const ArticleSchema = new Schema(
 )
 
 
-// 生成从0开始自增长的文章aid
+//生成从0开始自增长的文章aid
 ArticleSchema.pre('save', function (next) {
   var self = this;
   if (self.isNew) {
@@ -33,6 +33,6 @@ ArticleSchema.pre('save', function (next) {
   }
 })
 
-mongoose.model('Article', ArticleSchema)
+module.exports = mongoose.model('Article', ArticleSchema)
 
 

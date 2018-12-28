@@ -19,12 +19,22 @@ import ArticleService from '../service/articles'
 export class ArticleRouter {
   @Get('/all')
   async getAllArticles(ctx, next) {
-    const page = ctx.query.payload.page
-    const articles = await ArticleService.getAllArticles({
-      value : ctx.query.payload.value,
-      limit : ctx.query.payload.limit - 0 || 4,
-      skip : limit * (page - 1),
-    })
+    let articles = null
+    // console.log('ctx.request.body',ctx.request.body)
+    const { page, value, limit} = ctx.request.body
+    try {
+      articles = await ArticleService.getAllArticle({
+        value : value,
+        limit : limit - 0 || 4,
+        skip : limit * (page - 1),
+      })
+    } catch (e) {
+      console.log(e)
+      throw e
+    }
+
+
+    console.log('rep',articles)
 
     ctx.status = 200
     ctx.body = {
