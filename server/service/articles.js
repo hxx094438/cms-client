@@ -13,16 +13,15 @@ import Article from '../database/schema/article'
 class ArticleService {
 
   /**
-   * 
+   *
    * @param {opt} param0
-   * 
+   *
    */
-  async getAllArticle({
+  async getAllArticles({
     value,  //tags
     limit,  //最大值
     skip  // 页码
   }) {
-
     let _articles = {}
     //文章总数
     try {
@@ -58,8 +57,39 @@ class ArticleService {
         throw e
       }
     }
-    return Promise.resolve(_articles)
+    return _articles
   }
+
+
+//   router.get('/api/article/:aid', (req, res) => {
+//   db.Article.findOne({aid: req.params.aid}, (err, doc) => {
+//   if (err) {
+//     console.log(err)
+//   } else {
+//     res.status(200).send(doc)
+//   }
+// })
+// })
+
+  async getArticle ({aid}) {
+    let article = null
+    try{
+      article = await Article.findOne({
+        aid: aid
+      })
+        .exec()
+    } catch (e) {
+      console.log(e)
+      throw e
+    }
+    return article
+  }
+
+
+
+
+
+
 }
 
 module.exports = new ArticleService()

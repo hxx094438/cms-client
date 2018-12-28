@@ -18,7 +18,6 @@ import UserService from '../service/admin'
 
 @Controller('/api/admin')
 export default class AdminRouter {
-
   @Post('/login')
   @Required({
     body: ['name','password']

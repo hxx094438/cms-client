@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const sha1 = require('sha1')
 const rand = require('csprng')
-const Sequence = require('./sequence')
+const Sequence = require('./schema/sequence')
 import UserService from '../service/admin'
 
 // 初始化数据
