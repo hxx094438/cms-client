@@ -18,18 +18,17 @@ import UserService from '../service/admin'
 
 @Controller('/api/admin')
 export default class AdminRouter {
+
   @Post('/login')
   @Required({
-    body: ['name', 'password']
+    body: ['name','password']
   })
-  // @Auth
-
   async adminLogin(ctx, next) {
     const {
       name,
       password
     } = ctx.request.body
-
+    console.log('password',password,'name',name,ctx.request.body)
     const data = await UserService.checkPassword(name, password)
     const {
       user,
@@ -44,6 +43,7 @@ export default class AdminRouter {
       }
       ctx.status = 200
       ctx.body = {
+        msg:'登录成功',
         success: true,
         data: {
           name: user.name,
@@ -54,7 +54,7 @@ export default class AdminRouter {
       ctx.status = 200
       ctx.body = {
         success: false,
-        err: '密码错误'
+        msg: '密码错误'
       }
     }
   }
@@ -64,7 +64,7 @@ export default class AdminRouter {
   @Required({
     body: ['name', 'oldVal', 'newVal']
   })
-  async adminLogin(ctx, next) {
+  async adminModify(ctx, next) {
     // console.log('login','ctx', ctx.request)
     const {name, oldVal, newVal} = ctx.request.body
     const {user, match} = await UserService.checkPassword(name, oldVal)
@@ -74,26 +74,28 @@ export default class AdminRouter {
       console.log('修改密码')
       const salt = rand(160, 36)
       try {
+        console.log('user',user)
         let doc = await UserService.update(user._id, {
           name: user.name,
-          password: sha1('admin' + salt),
+          password: sha1(newVal + salt),
           salt: salt
         })
         console.log('doc', doc)
         ctx.status = 200
         ctx.body = {
           success: true,
-          data: {}
+          msg:'修改成功'
         }
       } catch (e) {
         console.log(e)
         throw e
       }
     } else {
+      console.log('密码错误')
       ctx.status = 200
       ctx.body = {
         success: false,
-        err: '密码错误'
+        msg: '密码错误'
       }
     }
 

@@ -9,6 +9,7 @@ import User from '../database/schema/user'
 
 class UserService {
   async checkPassword (name, password) {
+    console.log('passwo',password,name)
     let match = false
     let user = await this.findOne(name)
     // console.log('checkuser',user)
@@ -46,6 +47,7 @@ class UserService {
   
   async update ( id ,params){
     let result = null
+    console.log('update方法')
     try {
       result = await User.findByIdAndUpdate(id, {
         $set: params
@@ -66,7 +68,7 @@ class UserService {
 
     if(user === null ) {
       const salt = rand(160, 36)
-      console.log('user null')
+      console.log('mima','admin' + salt)
       user = new User({
         name: 'admin',
         password: sha1('admin' + salt),

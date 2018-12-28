@@ -96,7 +96,8 @@ UserSchema.methods = {
   comparePassword: (_password, user) => {
     return new Promise((resolve, reject) => {
       const salt = user.salt
-      // console.log('密码比较',user.password === sha1(_password + salt))
+      console.log('密码比较',_password,salt)
+
       resolve(user.password === sha1(_password + salt))
     })
   },
