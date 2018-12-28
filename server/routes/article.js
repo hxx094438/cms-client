@@ -1,7 +1,10 @@
-const Router = require('koa-router')
-const mongoose = require('mongoose')
+/*
+ * @Author: huangxiaoxun 
+ * @Date: 2018-12-28 01:03:20 
+ * @Last Modified by: huangxiaoxun
+ * @Last Modified time: 2018-12-28 01:44:45
+ */
 
-const router = new Router()
 
 import{
   Controller,
@@ -9,18 +12,21 @@ import{
   Required
 } from '../decorator/router'
 
-import {
-  getAllArticles
-} from '../service/articles'
+import ArticleService from '../service/articles'
 
 
 @Controller('/api/articles')
 export class ArticleRouter {
-  @Get('/')
-  async getArticles(ctx, next) {
-    const Article = mongoose.model('article')
-    const articles = await getAllArticles.find({})
+  @Get('/all')
+  async getAllArticles(ctx, next) {
+    const page = ctx.query.payload.page
+    const articles = await ArticleService.getAllArticles({
+      value : ctx.query.payload.value,
+      limit : ctx.query.payload.limit - 0 || 4,
+      skip : limit * (page - 1),
+    })
 
+    ctx.status = 200
     ctx.body = {
       data: articles,
       success: true
