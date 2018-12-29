@@ -9,7 +9,9 @@
 import {
   Controller,
   Get,
-  Required
+  Post,
+  Required,
+  Auth
 } from '../decorator/router'
 
 import ArticleService from '../service/articles'
@@ -17,6 +19,28 @@ import ArticleService from '../service/articles'
 
 @Controller('/api/articles')
 export class ArticleRouter {
+  @Post('/send')
+  @Required({
+    body: ['article']
+  })
+  @Auth
+  async sendArticle(ctx, next) {
+    const { article} = ctx.request.body
+    try {
+      await ArticleService._sendArticle(article)
+    } catch (e) {
+      console.log(e)
+      throw e
+    }
+
+    ctx.status = 200
+    ctx.body = {
+      msg: '保存成功',
+      success: true
+    }
+  }
+
+
   @Get('/all')
   @Required({
     body: ['page', 'value', 'limit']
@@ -26,7 +50,7 @@ export class ArticleRouter {
     // console.log('ctx.request.body',ctx.request.body)
     const {page, value, limit} = ctx.request.body
     try {
-      articles = await ArticleService.getAllArticles({
+      articles = await ArticleService._getAllArticles({
         value: value,
         limit: limit - 0 || 4,
         skip: limit * (page - 1),
@@ -50,7 +74,7 @@ export class ArticleRouter {
     let article = null
     const { aid } = ctx.params
     try {
-      article = await ArticleService.getArticle({
+      article = await ArticleService._getArticle({
         aid : aid
       })
     } catch (e) {

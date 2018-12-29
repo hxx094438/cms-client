@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
+import Sequence from './sequence'
 const Schema = mongoose.Schema
-
 
 
 const ArticleSchema = new Schema(
@@ -22,6 +22,7 @@ const ArticleSchema = new Schema(
 ArticleSchema.pre('save', function (next) {
   var self = this;
   if (self.isNew) {
+
       Sequence.increment('Article', function (err, result) {
           if (err)
               throw err;

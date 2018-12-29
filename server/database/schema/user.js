@@ -57,10 +57,11 @@ UserSchema.methods = {
    * @param user
    * @returns {Promise}
    */
-  incLoginAttempts: (user) => {
+  incLoginAttempts: function(user) {
+    const _self = this
     return new Promise((resolve, reject) => {
-      if (this.lockUntil && this.lockUntil < Date.now()) {
-        this.update({
+      if (_self.lockUntil && _self.lockUntil < Date.now()) {
+        _self.update({
           $set: {
             loginAttempts: 1
           },
@@ -78,13 +79,13 @@ UserSchema.methods = {
           }
         }
 
-        if (this.loginAttempts + 1 >= MAX_LOGIN_ATTEMPTS && !this.isLocked) {
+        if (_self.loginAttempts + 1 >= MAX_LOGIN_ATTEMPTS && !_self.isLocked) {
           updates.$set = {
             lockUntil: Date.now() + LOCK_TIME
           }
         }
 
-        this.update(updates, err => {
+        _self.update(updates, err => {
           if (!err) resolve(true)
           else reject(err)
         })
@@ -93,7 +94,7 @@ UserSchema.methods = {
   },
 
 
-  comparePassword: (_password, user) => {
+  comparePassword: function (_password, user) {
     return new Promise((resolve, reject) => {
       const salt = user.salt
       console.log('密码比较',_password,salt)

@@ -114,7 +114,7 @@ export const Required = paramsObj => convert(async (ctx, next) => {
       )
     }
   )(paramsObj)
-  // console.log('paramsObj',paramsObj,ctx.request.body,'err',errs)
+  console.log('paramsObj',paramsObj,ctx.request.body,'err',errs)
   if (!R.isEmpty(errs)) {
     return (
       ctx.body = {

@@ -12,12 +12,20 @@ import Article from '../database/schema/article'
 
 class ArticleService {
 
+
+
+  async _sendArticle (article) {
+    console.log('article',article)
+    await new Article(article).save()
+  }
+
+
   /**
    *
    * @param {opt} param0
    *
    */
-  async getAllArticles({
+  async _getAllArticles({
     value,  //tags
     limit,  //最大值
     skip  // 页码
@@ -60,18 +68,7 @@ class ArticleService {
     return _articles
   }
 
-
-//   router.get('/api/article/:aid', (req, res) => {
-//   db.Article.findOne({aid: req.params.aid}, (err, doc) => {
-//   if (err) {
-//     console.log(err)
-//   } else {
-//     res.status(200).send(doc)
-//   }
-// })
-// })
-
-  async getArticle ({aid}) {
+  async _getArticle ({aid}) {
     let article = null
     try{
       article = await Article.findOne({
