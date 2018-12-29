@@ -21,6 +21,7 @@ SequenceSchema.statics = {
   },
 
   increment:function (schemaName, callback) {
+    console.log('this',this.collection)
     return this.collection.findAndModify({_id: schemaName}, [],
     { $inc: { next: 1 } }, {"new":true, upsert:true}, callback);
   }
