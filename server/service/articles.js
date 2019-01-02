@@ -12,8 +12,6 @@ import Article from '../database/schema/article'
 
 class ArticleService {
 
-
-
   async _sendArticle (article) {
     console.log('article',article)
     await new Article(article).save()
@@ -82,7 +80,21 @@ class ArticleService {
     return article
   }
 
+  async _updateArticle ({article , aid}) {
+    try {
+      return await Article.update({aid: aid}, article)
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
+  async _ArticleLike ({article , aid}) {
+    try {
+      return await Article.findOneAndUpdate({aid: aid}, {$inc: {ArticleLike: 1}}, {new: true})
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
 
 

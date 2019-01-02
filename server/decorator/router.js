@@ -85,6 +85,8 @@ export const Get = setRouter('get')
 
 export const Post = setRouter('post')
 
+export const Patch = setRouter('patch')
+
 export const Put = setRouter('put')
 
 export const Delete = setRouter('delete')
