@@ -2,44 +2,68 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-10-28 15:24:14 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2018-12-21 21:08:54
+ * @Last Modified time: 2019-03-30 18:36:36
  */
 import { join } from 'path'
 import Koa from 'koa'
+const send = require('koa-send');
+const path = require('path');
 import R from 'ramda'
 import chalk from 'chalk'
 import config from './config/index'
 
-const MIDDLEWARES = ['database', 'general', 'router']
 
-const useMiddlewares = (app) => {
-  R.map(
-    R.compose(
-      R.forEachObjIndexed(
-        e => e(app)
-      ),
-      require,
-      name => join(__dirname, `./middleware/${name}`)
-    )
-  )(MIDDLEWARES)
-}
+const MIDDLEWARES = ['ssr']
+const isDev = process.env.NODE_ENV === 'development';
+
+const app = new Koa()
+
+console.log('app',app)
+
+// const useMiddlewares = (app) => {
+//   R.map(
+//     R.compose(
+//       R.forEachObjIndexed(
+//         e => e(app)
+//       ),
+//       require,
+//       name => join(__dirname, `./middleware/${name}`)
+//     )
+//   )(MIDDLEWARES)
+// }
+
 
 ;(async function () {
-  // mongoose.connect(config.mongoConfig.url, {useNewUrlParser: true}, (err) => {
-  //   if (err) {
-  //     console.log(err)
-  //   } else {
-  //     console.log('Connection success!')
-  //   }
-  // })
   /**
    * 将config注入中间件的ctx
    * */
   // app.context.config = config
 
+  let pageRouter;
+  if (isDev) {
+    pageRouter = require('./routers/dev-ssr');
+  } else {
+    pageRouter = require('./routers/ssr');
+  }
+  
+  app.use(pageRouter.routes()).use(pageRouter.allowedMethods());
 
-  const app = new Koa()
-  await useMiddlewares(app)
+
+
+
+
+  app.use(async (ctx, next) => {
+    if (ctx.path === '/favicon.ico') {
+      await send(ctx, '/favicon.ico', {root: path.join(__dirname, '../')});
+    } else {
+      await next();
+    }
+  });
+  // await useMiddlewares(app)  
+
+
+  // app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
+
 
   // app.use(require('./routes/index.js').routes())
   
