@@ -10,7 +10,7 @@ module.exports = async (ctx, renderer, template) => {
   const context = { url: ctx.url };
   try {
     const appString = await renderer.renderToString(context);
-    console.log('context',context)
+    // console.log('context',context)
     const meta = context.meta.inject();
     ctx.body = ejs.render(template, {
       appString,

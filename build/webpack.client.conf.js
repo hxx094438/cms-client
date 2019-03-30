@@ -4,6 +4,8 @@ const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const SWPrecachePlugin = require('sw-precache-webpack-plugin')
 const VueClientPlugin = require('vue-server-renderer/client-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 const isDev = process.env.NODE_ENV === 'development'
 
 let webpackConfig = merge(baseWebpackConfig, {
@@ -44,6 +46,11 @@ let webpackConfig = merge(baseWebpackConfig, {
         name: 'manifest'
       }),
       new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
+      new HtmlWebpackPlugin({
+        filename: 'index.html',
+        template: 'index.html',
+        inject: true
+      }),
       new webpack.NoEmitOnErrorsPlugin(),
       // https://github.com/ampedandwired/html-webpack-plugin
     ]

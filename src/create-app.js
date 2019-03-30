@@ -16,6 +16,7 @@ import axios from 'axios'
 axios.defaults.withCredentials = true
 Vue.prototype.$http = axios
 
+Vue.use(Meta);
 
 
 

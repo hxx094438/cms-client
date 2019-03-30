@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-10-28 15:24:14 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-03-30 18:36:36
+ * @Last Modified time: 2019-03-30 22:29:52
  */
 import { join } from 'path'
 import Koa from 'koa'
@@ -11,6 +11,8 @@ const path = require('path');
 import R from 'ramda'
 import chalk from 'chalk'
 import config from './config/index'
+// import serve from 'koa-static'
+const staticRouter = require('./routers/static');
 
 
 const MIDDLEWARES = ['ssr']
@@ -45,20 +47,31 @@ console.log('app',app)
   } else {
     pageRouter = require('./routers/ssr');
   }
+
+//   const staticPath = '../dist'
+// // console.log('pathpath', path.join(__dirname, staticPath))
+//   app.use(serve(
+//     path.join(__dirname, staticPath)
+//   ))
+
+
+app.use(async (ctx, next) => {
+  if (ctx.path === '/favicon.ico') {
+    await send(ctx, '/favicon.ico', {root: path.join(__dirname, '../')});
+  } else {
+    await next();
+  }
+});
   
+  app.use(staticRouter.routes()).use(staticRouter.allowedMethods());
+
   app.use(pageRouter.routes()).use(pageRouter.allowedMethods());
 
 
 
 
 
-  app.use(async (ctx, next) => {
-    if (ctx.path === '/favicon.ico') {
-      await send(ctx, '/favicon.ico', {root: path.join(__dirname, '../')});
-    } else {
-      await next();
-    }
-  });
+ 
   // await useMiddlewares(app)  
 
 

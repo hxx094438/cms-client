@@ -15,8 +15,9 @@ export default context => {
     console.log('entry-sercer:',typeof context)
 
     const { url } = context
+
     const { fullPath } = router.resolve(url).route
-    // console.log('fullPath',fullPath,'url',url)
+    console.log('fullPath',fullPath,'url',url)
     if (fullPath !== url) {
       return reject({ url: fullPath })
     }
@@ -55,6 +56,7 @@ export default context => {
         // store to pick-up the server-side state without having to duplicate
         // the initial data fetching on the client.
         context.state = store.state
+        context.meta = app.$meta();
         resolve(app)
       })
       // .catch(resolve(app))  
@@ -64,11 +66,9 @@ export default context => {
         console.log(chalk.red('AsyncData Error Caused URL '), context.url);
         console.log(chalk.red('AsyncData Error Caused '), error);
         // 这里需要处理请求失败的情况，可能是没有权限
-        // if(error.code === 401) {
-        //   console.log('server-entry auth', error.code)
-        //   context.state = store.state;
-        //   resolve(app);
-        // }
+        // if(erro
+        
+
         context.state = store.state;
         resolve(app);
       })
