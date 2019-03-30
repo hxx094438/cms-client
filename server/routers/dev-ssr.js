@@ -68,6 +68,7 @@ const handleSSR = async (ctx) => {
 
 const router = new Router();
 // 所有的请求都通过handleSSR处理
+
 router.get('*', handleSSR);
 
 module.exports = router;

@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-10-28 15:24:14 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-03-30 22:29:52
+ * @Last Modified time: 2019-03-30 23:26:46
  */
 import { join } from 'path'
 import Koa from 'koa'
@@ -12,27 +12,28 @@ import R from 'ramda'
 import chalk from 'chalk'
 import config from './config/index'
 // import serve from 'koa-static'
+
 const staticRouter = require('./routers/static');
 
 
-const MIDDLEWARES = ['ssr']
+const MIDDLEWARES = ['static']
 const isDev = process.env.NODE_ENV === 'development';
 
 const app = new Koa()
 
 console.log('app',app)
 
-// const useMiddlewares = (app) => {
-//   R.map(
-//     R.compose(
-//       R.forEachObjIndexed(
-//         e => e(app)
-//       ),
-//       require,
-//       name => join(__dirname, `./middleware/${name}`)
-//     )
-//   )(MIDDLEWARES)
-// }
+const useMiddlewares = (app) => {
+  R.map(
+    R.compose(
+      R.forEachObjIndexed(
+        e => e(app)
+      ),
+      require,
+      name => join(__dirname, `./middleware/${name}`)
+    )
+  )(MIDDLEWARES)
+}
 
 
 ;(async function () {
@@ -40,6 +41,9 @@ console.log('app',app)
    * 将config注入中间件的ctx
    * */
   // app.context.config = config
+
+  await useMiddlewares(app)  
+
 
   let pageRouter;
   if (isDev) {
@@ -63,7 +67,7 @@ app.use(async (ctx, next) => {
   }
 });
   
-  app.use(staticRouter.routes()).use(staticRouter.allowedMethods());
+  // app.use(staticRouter.routes()).use(staticRouter.allowedMethods());
 
   app.use(pageRouter.routes()).use(pageRouter.allowedMethods());
 
@@ -72,7 +76,6 @@ app.use(async (ctx, next) => {
 
 
  
-  // await useMiddlewares(app)  
 
 
   // app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
