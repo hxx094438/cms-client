@@ -14,16 +14,17 @@
   import ArticleContent from './component/ArticleContent'
 
   export default {
-    created() {
-//      this.getAllArticles({page: this.page, limit: 4})
+    mounted() {
+     this.getAllArticles({page: this.page, limit: 4}) //服务端不会调用
     },
     data() {
       return {
-        page: 1,
+        page: 1
       }
     },
 
     asyncData ({ store }) {
+      console.log('-----async page',this, 'store',store)
       let params = {
         page: 1, limit: 4
       }
@@ -53,7 +54,11 @@
       }
     },
     computed: {
-      ...mapState(['articles', 'pageTotal']),
+      ...mapState({
+        articles: state => state.back.articles, 
+        pageTotal: state => state.back.pageTotal,
+        page: state => state.back.page
+        }),
     },
     components: {
       ArticleContent

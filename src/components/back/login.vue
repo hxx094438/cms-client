@@ -29,14 +29,6 @@
       }
     },
 
-    asyncData ({ store }) {
-      let params = {
-        page: 1, limit: 4
-      }
-      return store.dispatch('GET_ALL_ARTICLES', params)
-//      return store.dispatch('getAllArticles', {page: this.page, limit: 4})
-    },
-
     methods: {
       ...mapActions({
         login: 'LOGIN'

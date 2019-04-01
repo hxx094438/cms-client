@@ -43,7 +43,9 @@ import { mapMutations, mapState } from 'vuex'
 export default {
 
   computed: {
-    ...mapState(['user']),
+    ...mapState({
+      user: state => state.back.user
+    }),
     time() {
       const hours = new Date().getHours()
       if (hours > 5 && hours < 12) {

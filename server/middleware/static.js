@@ -4,10 +4,7 @@ const send = require('koa-send');
 const c2k = require('koa-connect');
 const proxy = require('http-proxy-middleware')
 
-
-
 export default (app) => {
-
   const staticRouter = new Router({ prefix: '/dist' });
   // app.use('/api', proxy({target: 'http://localhost:3001/', changeOrigin: true}))
   staticRouter

@@ -22,6 +22,10 @@ let webpackConfig = merge(baseWebpackConfig, {
         },
       ]
     },
+
+    performance: {
+      hints:false    // 去掉 超过250kb文件的warn提示
+    },      
     plugins: [
       new VueClientPlugin(),
       new webpack.DefinePlugin({

@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-10-28 15:24:14 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-03-30 23:26:46
+ * @Last Modified time: 2019-04-01 22:57:26
  */
 import { join } from 'path'
 import Koa from 'koa'
@@ -67,21 +67,7 @@ app.use(async (ctx, next) => {
   }
 });
   
-  // app.use(staticRouter.routes()).use(staticRouter.allowedMethods());
-
   app.use(pageRouter.routes()).use(pageRouter.allowedMethods());
-
-
-
-
-
- 
-
-
-  // app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
-
-
-  // app.use(require('./routes/index.js').routes())
   
   app.listen(config.app.port, () => {
     console.log(`app is listening on port ${chalk.green(config.app.port)}`)
