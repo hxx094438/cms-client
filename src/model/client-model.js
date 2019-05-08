@@ -1,9 +1,13 @@
 import axios from 'axios'
 import { createError } from './util'
 
+const baseUrl = typeof window === 'object' ? '/api' : 'http://127.0.0.1:3002/api'
+// console.log('baseUrl',baseUrl)
 const request = axios.create({
-  baseURL: typeof window === 'object' ? '/api' : 'http://127.0.0.1:3002/api'
+  baseURL: baseUrl
 })
+
+console.log('window',typeof window === 'object',request.baseURL)
 
 const handleRequest = (request) => {
   // console.log('request',request)

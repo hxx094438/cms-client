@@ -15,20 +15,22 @@
 
   export default {
     mounted() {
-     this.getAllArticles({page: this.page, limit: 4}) //服务端不会调用
+//     this.getAllArticles({page: this.page, limit: 4}) //服务端不会调用
     },
     data() {
       return {
-        page: 1
+//        page: this.$route.page,
+        pages: 12,
       }
     },
 
-    asyncData ({ store }) {
-      console.log('-----async page',this, 'store',store)
-      let params = {
-        page: 1, limit: 4
-      }
-      return store.dispatch('GET_ALL_ARTICLES', params)
+    asyncData ({ store, route }) {
+      console.log('pages',this.pages)
+      console.log('store.back',store.back)
+      return store.dispatch('articles/GET_ALL_ARTICLES', {
+        page: store.back.page,
+        limit :store.back.defaultLimit
+      })
 //      return store.dispatch('getAllArticles', {page: this.page, limit: 4})
     },
 
@@ -38,8 +40,8 @@
       }),
       nextPage() {
         if (this.page < this.pageTotal) {
-          this.page++
-          this.getAllArticles({page: this.page, limit: 4})
+          this.$store.commit('back/ADD_PAGE')
+          this.getAllArticles({page: this.page, limit: this.defaultLimit})
         } else {
           alert('没有更多了！')
         }
@@ -48,8 +50,8 @@
         if (!(this.page - 1)) {
           alert('已经到第一页咯')
         } else {
-          this.page--
-          this.getAllArticles({page: this.page, limit: 4})
+          this.$store.commit('back/REDUCE_PAGE')
+          this.getAllArticles({page: this.page, limit: this.defaultLimit})
         }
       }
     },
@@ -57,7 +59,8 @@
       ...mapState({
         articles: state => state.back.articles, 
         pageTotal: state => state.back.pageTotal,
-        page: state => state.back.page
+        page: state => state.back.page,
+        defaultLimit: state => state.back.defaultLimit
         }),
     },
     components: {

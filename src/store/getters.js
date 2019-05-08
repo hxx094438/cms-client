@@ -21,10 +21,10 @@ export default {
         })
         return articles
     },
-    allTags: (state) => {
-        state.tags.unshift('全部')
-        return state.tags
-    },
+    // allTags: (state) => {
+    //     state.tags.unshift('全部')
+    //     return state.tags
+    // },
 
     // likes: (state) => {
     //     const item = localStorage.getItem(this.$route.params.id)

@@ -55,8 +55,6 @@ export default {
         // endLoading(commit, startTime, 'isLoading_toggle')
       }
     })
-    
-        
   },
 
   SAVE_ARTICLE({state, commit}, payload) {
