@@ -19,29 +19,27 @@
     },
     data() {
       return {
-//        page: this.$route.page,
-        pages: 12,
+        page: this.$route.query.page || 1,
+        limit: this.$route.query.limit || 4,
       }
     },
 
     asyncData ({ store, route }) {
-      console.log('pages',this.pages)
-      console.log('store.back',store.back)
-      return store.dispatch('articles/GET_ALL_ARTICLES', {
-        page: store.back.page,
-        limit :store.back.defaultLimit
+      const {page, limit} = route.query
+      return store.dispatch('back/GET_ALL_ARTICLES', {
+        page: page || 1,
+        limit :limit || 4
       })
-//      return store.dispatch('getAllArticles', {page: this.page, limit: 4})
     },
 
     methods: {
       ...mapActions({
-        getAllArticles: 'GET_ALL_ARTICLES'
+        getAllArticles: 'articles/GET_ALL_ARTICLES'
       }),
       nextPage() {
-        if (this.page < this.pageTotal) {
-          this.$store.commit('back/ADD_PAGE')
-          this.getAllArticles({page: this.page, limit: this.defaultLimit})
+        if (this.noMoreData) {
+          this.page ++
+          this.getAllArticles({page: this.page, limit: this.limit})
         } else {
           alert('没有更多了！')
         }
@@ -50,17 +48,17 @@
         if (!(this.page - 1)) {
           alert('已经到第一页咯')
         } else {
-          this.$store.commit('back/REDUCE_PAGE')
-          this.getAllArticles({page: this.page, limit: this.defaultLimit})
+          this.page --
+          this.getAllArticles({page: this.page, limit: this.limit})
         }
       }
     },
     computed: {
       ...mapState({
-        articles: state => state.back.articles, 
-        pageTotal: state => state.back.pageTotal,
-        page: state => state.back.page,
-        defaultLimit: state => state.back.defaultLimit
+        articles: state => state.back.articles,
+        noMoreData: state => state.back.noMoreData,
+//        page: state => state.back.page,
+//        defaultLimit: state => state.back.defaultLimit
         }),
     },
     components: {

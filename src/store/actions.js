@@ -88,16 +88,7 @@ export default {
       })
   },
 
-  delArticle({dispatch}, payload) {
-    return Vue.http.delete('/api/article/' + payload.aid)
-      .then(() => {
-        if (payload.route.name === 'posts') dispatch('getAllArticles', {page: payload.page, limit: 4})
-        if (payload.route.name === 'drafts') dispatch('getAllDrafts', {page: payload.page, limit: 4})
-        if (payload.route.name === 'search') router.push({name: 'posts'})
-      }).catch((err) => {
-        console.log(err)
-      })
-  },
+
 
   //draft
   saveDraft({state, commit}, aid) {

@@ -1,3 +1,4 @@
+import model from '../../model/client-model'
 
 export default {
   namespaced: true,
@@ -11,18 +12,13 @@ export default {
   mutations: {
     SET_POSTS_BASE_INFO (state, data) {
       const {total , articles, page} = data
+      console.log('page', page)
       state.articles = articles
       state.noMoreData = page >= total
       // localStorage.setItem('articles',window.JSON.stringify(articles))
     },
 
-    ADD_PAGE(state) {
-      state.page ++
-    },
 
-    REDUCE_PAGE(state) {
-      state.page --
-    }
 
 
 
@@ -31,13 +27,14 @@ export default {
   },
   actions: {
     GET_ALL_ARTICLES ({state, commit}, params) {
-      commit('moreArticle_toggle', true)
+      // commit('moreArticle_toggle', true)
       // const startTime = beginLoading(commit, payload.add)
       // if (params.value) {
       //   commit('isLoading_toggle', false, { root: true })
       // }
-      return model.getAllArticles({...params,limit: state.defaultLimit}).then( res => {
-        console.log('action', typeof res)
+      console.log('params',params)
+      return model.getAllArticles(params).then( res => {
+        // console.log('action', {...params,...res})
         // const {total , articles} = res
         commit('SET_POSTS_BASE_INFO', {...params,...res})
         // console.log('total',total,'article',articles)
@@ -56,6 +53,18 @@ export default {
         //   // endLoading(commit, startTime, 'isLoading_toggle')
         // }
       })
+    },
+
+
+    DEL_ARTICLE({dispatch}, payload) {
+      return Vue.http.delete('/api/article/' + payload.aid)
+        .then(() => {
+          if (payload.route.name === 'posts') dispatch('getAllArticles', {page: payload.page, limit: 4})
+          if (payload.route.name === 'drafts') dispatch('getAllDrafts', {page: payload.page, limit: 4})
+          if (payload.route.name === 'search') router.push({name: 'posts'})
+        }).catch((err) => {
+          console.log(err)
+        })
     },
   }
 };

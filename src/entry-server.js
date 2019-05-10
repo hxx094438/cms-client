@@ -41,7 +41,7 @@ export default context => {
       // which is resolved when the action is complete and store state has been
       // updated.
       Promise.all(matchedComponents.map(({ asyncData }) => {
-        console.log('asyncData：',typeof asyncData)
+        // console.log('asyncData：',typeof asyncData)
         return asyncData && asyncData({
         store,
         route: router.currentRoute
