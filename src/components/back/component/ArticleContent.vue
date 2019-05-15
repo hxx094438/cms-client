@@ -40,7 +40,7 @@
       ...mapState(
         {
           articles: state => state.back.articles,
-//        dialog: state => state.back.dialog,
+          dialog: state => state.dialog,
 //        page: state => state.back.page,
 //        defaultLimit: state => state.back.defaultLimit
         }
@@ -48,7 +48,9 @@
     },
 
     methods: {
-      ...mapActions(['back/DEL_ARTICLE']),
+      ...mapActions({
+        delArticle: 'back/DEL_ARTICLE'
+      }),
       ...mapMutations(['set_dialog']),
       nextPage() {
         this.$emit('addPage')   // 传递给父组件
@@ -57,6 +59,7 @@
         this.$emit('dropPage') // 传递给父组件
       },
       deleteConfirm(aid) {
+        console.log('删除')
         this.set_dialog({
           info: '确认删除？',
           hasTwoBtn: true,

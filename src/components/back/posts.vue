@@ -34,7 +34,7 @@
 
     methods: {
       ...mapActions({
-        getAllArticles: 'articles/GET_ALL_ARTICLES'
+        getAllArticles: 'back/GET_ALL_ARTICLES'
       }),
       nextPage() {
         if (this.noMoreData) {

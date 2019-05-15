@@ -1,9 +1,9 @@
 <template>
     <div id="app">
         <router-view/>
-        <!--<transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">-->
-            <!--<dialog-box v-if="dialog.show"></dialog-box>-->
-        <!--</transition>-->
+        <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+            <dialog-box v-if="dialog.show"></dialog-box>
+        </transition>
     </div>
 </template>
 

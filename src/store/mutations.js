@@ -76,6 +76,7 @@ export default {
     },
     // 对话框
     set_dialog: (state, payload) => {
+        console.log('state',state,state.dialog)
         state.dialog = payload
         state.dialog.resolveFn = () => {}
         state.dialog.rejectFn = () => {}

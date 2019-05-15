@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { createError } from './util'
 
-const baseUrl = typeof window === 'object' ? '/api' : 'http://127.0.0.1:3002/api'
+// const baseUrl = typeof window === 'object' ? '/api' : 'http://127.0.0.1:3002/api'
+const baseUrl = 'http://127.0.0.1:3002/api'
 // console.log('baseUrl',baseUrl)
 const request = axios.create({
   baseURL: baseUrl
@@ -10,7 +11,7 @@ const request = axios.create({
 console.log('window',typeof window === 'object',request.baseURL)
 
 const handleRequest = (request) => {
-  // console.log('request',request)
+  console.log('baseUrl',baseUrl)
   return new Promise((resolve, reject) => {
     request.then(resp => {
       const {data , status} = resp
@@ -60,6 +61,11 @@ export default {
   getArticle(aid) {
     return handleRequest(request.get(`/articles/${aid}`))
   },
+
+  delArticle(aid) {
+    return handleRequest(request.delete(`/article/${aid}`))
+  },
+
 
 
   saveArticlePatch(payload) {

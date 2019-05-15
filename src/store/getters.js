@@ -13,7 +13,7 @@ renderer.heading = function (text, level) {
 
 export default {
     reducedArticles: (state) => {
-        const articles = state.articles.map(article => {            //遍历处理已经请求到的articles
+        const articles = state.back.articles.map(article => {            //遍历处理已经请求到的articles
             let newArticle = {};
             for(let i in article) { newArticle[i] = article[i];}
             newArticle.content = marked(article.content || '').replace(/<[^>]*>/g, '').slice(0,200) + '......'
