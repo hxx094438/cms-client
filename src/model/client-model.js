@@ -4,6 +4,7 @@ import { createError } from './util'
 // const baseUrl = typeof window === 'object' ? '/api' : 'http://127.0.0.1:3002/api'
 const baseUrl = 'http://127.0.0.1:3002/api'
 // console.log('baseUrl',baseUrl)
+axios.defaults.withCredentials = true
 const request = axios.create({
   baseURL: baseUrl
 })
@@ -69,6 +70,7 @@ export default {
 
 
   saveArticlePatch(payload) {
+
   },
 
   saveArticle(payload) {
