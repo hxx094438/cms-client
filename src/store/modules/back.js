@@ -8,6 +8,7 @@ export default {
     articles: undefined,
     noMoreData: false,
     defaultLimit: 4,
+    article: ''
   },
   mutations: {
     SET_POSTS_BASE_INFO (state, data) {
@@ -16,6 +17,19 @@ export default {
       state.articles = articles
       state.noMoreData = page >= total
       // localStorage.setItem('articles',window.JSON.stringify(articles))
+    },
+    SET_ARTICLE: (state, article) => {
+      state.article = article
+    },
+
+    UPDATE_POST_TITLE: (state, title) => {
+      state.article.title = title
+    },
+    UPDATE_POST_CONTENT: (state, content) => {
+      state.article.content = content
+    },
+    UPDATE_POST_TAGS: (state, tags) => {
+      state.article.tags = tasg
     },
 
 

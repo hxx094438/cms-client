@@ -1,4 +1,13 @@
 export default {
+
+
+  // 对话框
+  SET_DIALOG: (state, payload) => {
+    console.log('state',state,state.dialog)
+    state.dialog = payload
+    state.dialog.resolveFn = () => {}
+    state.dialog.rejectFn = () => {}
+  },
     // login
     set_user: (state, user) => {
         localStorage.setItem('token', user.token)
@@ -44,15 +53,13 @@ export default {
         state.curTag = tag
     },
     // article
-    update_post_title: (state, title) => {
+  /*  update_post_title: (state, title) => {
         state.article.title = title
     },
     update_post_content: (state, content) => {
         state.article.content = content
-    },
-    set_article: (state, article) => {
-        state.article = article
-    },
+    },*/
+
     set_all_articles: (state, articles) => {
       state.articles = articles
         // localStorage.setItem('articles',window.JSON.stringify(articles))
@@ -74,11 +81,5 @@ export default {
     set_likeArr: (state, likeArr) => {
         state.likeArr = likeArr
     },
-    // 对话框
-    set_dialog: (state, payload) => {
-        console.log('state',state,state.dialog)
-        state.dialog = payload
-        state.dialog.resolveFn = () => {}
-        state.dialog.rejectFn = () => {}
-    }
+
 }

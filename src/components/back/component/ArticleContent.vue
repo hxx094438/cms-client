@@ -69,7 +69,7 @@
           this.dialog.resolveFn = resolve
           this.dialog.rejectFn = reject
         }).then(() => {
-          this.delArticle({aid: aid, page: this.page, route: this.$route})
+          this.delArticle({aid: aid+"", page: this.page, route: this.$route})
         }).catch((err) => {
           console.log(err)
         })

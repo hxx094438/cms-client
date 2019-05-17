@@ -64,7 +64,7 @@ export default {
   },
 
   delArticle(aid) {
-    return handleRequest(request.delete(`/article/${aid}`))
+    return handleRequest(request.delete(`/articles/${aid}`))
   },
 
 

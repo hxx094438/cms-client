@@ -55,7 +55,8 @@
         isMarked: true,
         firstUpdate: true,
         isChange: false,
-        mdHtml: ''
+        isSaving: false,
+        mdHtml: '',
       }
     },
     directives: {
@@ -67,9 +68,9 @@
     },
 
 
-    asyncData ({ store, route }) {
-      const { aid } = route.query
-      if(aid) {
+    asyncData({store, route}) {
+      const {aid} = route.query
+      if (aid) {
         return store.dispatch('getArticle', aid)
       }
     },
@@ -81,7 +82,7 @@
 //      if (aid) {
 //        return this.getArticle(aid)
 //      }
-      this.set_article({
+      this.SET_ARTICLE({
         content: '',
         title: '',
         tags: ['']
@@ -102,7 +103,10 @@
       this.firstUpdate = false
     },
     computed: {
-      ...mapState(['article', 'isSaving', 'dialog']),
+      ...mapState({
+        article: state => state.back.article,
+        dialog: state => state.dialog,
+      }),
       mdContent: {
         get() {
           this.mdHtml = marked(this.article.content || '', {renderer: renderer})
@@ -125,14 +129,23 @@
       }
     },
     methods: {
-      ...mapMutations(['set_article', 'update_post_content', 'update_post_title', 'update_post_tags', 'isSaving_toggle', 'isSend_toggle', 'set_dialog']),
+      ...mapMutations(['back/SET_ARTICLE', 'update_post_content', 'update_post_title', 'update_post_tags', 'isSaving_toggle', 'isSend_toggle', 'set_dialog']),
+      ...mapMutations({
+        SET_ARTICLE: 'back/SET_ARTICLE',
+        UPDATE_POST_TITLE:'back/UPDATE_POST_TITLE',
+        UPDATE_POST_CONTENT:'back/UPDATE_POST_CONTENT',
+        UPDATE_POST_TAGS:'back/UPDATE_POST_TAGS',
+     /*   'isSaving_toggle',
+        'isSend_toggle',*/
+        'set_dialog'
+      }),
       ...mapActions(['SAVE_ARTICLE', 'getArticle', 'saveDraft']),
       saveArticle() {
-        this.SAVE_ARTICLE({aid : this.$route.query.aid}).then(() => {
+        this.SAVE_ARTICLE({aid: this.$route.query.aid}).then(() => {
           this.$router.push({name: 'posts'})
         })
       }
-      
+
 
     },
     components: {
