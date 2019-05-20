@@ -57,65 +57,12 @@ export default {
     })
   },
 
-  SAVE_ARTICLE({state, commit}, payload) {
-    commit('isSaving_toggle', false)
-    if (!state.isSend) {
-        return model.saveArticle({article: state.article, aid: payload.aid})
-          .then(() => {
-            commit('isSaving_toggle', true)
-            commit('isSend_toggle', true)
-          }).catch((err) => {
-            console.log(err)
-          })
-      
-    }
-  },
-
-  getArticle({commit, state}, aid) {
-    const startTime = beginLoading(commit, false);
-    if (router.currentRoute.hash) {
-      commit('isLoading_toggle', false)
-    }
-    document.title = '加载中...'
-    return model.getArticle(aid)
-      .then(response => {
-        commit('set_article', response.data)
-        commit('set_headline', {content: state.article.title, animation: 'animated rotateIn'})
-        document.title = state.article.title
-        endLoading(commit, startTime, 'isLoading_toggle')
-      }).catch((err) => {
-        console.log(err)
-      })
-  },
 
 
 
-  //draft
-  saveDraft({state, commit}, aid) {
-    if (!state.isSaving) {
-      if (aid) {
-        return Vue.http.patch('/api/draft/' + aid, state.article)
-          .then(() => {
-            commit('isSaving_toggle', true)
-            router.push({name: 'drafts'})
-          }, () => {
-            alert('保存失败')
-          }).catch((err) => {
-            console.log(err)
-          })
-      } else {
-        return Vue.http.post('/api/draft/', state.article)
-          .then(() => {
-            commit('isSaving_toggle', true)
-            router.push({name: 'drafts'})
-          }, () => {
-            alert('保存失败')
-          }).catch((err) => {
-            console.log(err)
-          })
-      }
-    }
-  },
+
+
+
   // 这里要怎么把pageTotal返回？
   getAllDrafts({commit}, payload) {
     return Vue.http.get('/api/drafts', {params: {payload}})

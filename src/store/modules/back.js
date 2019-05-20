@@ -8,7 +8,8 @@ export default {
     articles: undefined,
     noMoreData: false,
     defaultLimit: 4,
-    article: ''
+    article: {},
+    draft: {},
   },
   mutations: {
     SET_POSTS_BASE_INFO (state, data) {
@@ -30,6 +31,12 @@ export default {
     },
     UPDATE_POST_TAGS: (state, tags) => {
       state.article.tags = tasg
+    },
+
+    //草稿
+
+    SET_DRAFT: (state, draft) => {
+      state.draft = draft
     },
 
 
@@ -59,5 +66,44 @@ export default {
           console.log(err)
         })
     },
+
+
+    GET_ARTICLE({commit, state}, aid) {
+      // const startTime = beginLoading(commit, false);
+      // if (router.currentRoute.hash) {
+      //   commit('isLoading_toggle', false)
+      // }
+      // document.title = '加载中...'
+      console.log('-----------111')
+      return model.getArticle(aid)
+        .then(res => {
+          commit('SET_ARTICLE', res)
+          // commit('set_headline', {content: state.article.title, animation: 'animated rotateIn'})
+          // document.title = state.article.title
+          // endLoading(commit, startTime, 'isLoading_toggle')
+        }).catch((err) => {
+          console.log(err)
+        })
+    },
+
+
+    SAVE_ARTICLE({state, commit}, payload) {
+      // commit('isSaving_toggle', false)
+      // if (!state.isSend) {
+        return model.saveArticle({article: state.article, aid: payload.aid})
+          .then(() => {
+            // commit('isSaving_toggle', true)
+            // commit('isSend_toggle', true)
+          }).catch((err) => {
+            console.log(err)
+          })
+      // }
+    },
+
+    SAVE_DRAFTS({state, commit}, payload) {
+        return model.saveDrafts({draft: state.draft ,aid: payload.aid})
+    },
+
+
   }
 };

@@ -25,8 +25,8 @@
       ></textarea>
       <div class="preview animated fadeIn" v-if="!isMarked" v-html="mdHtml" tabIndex="1" v-focus></div>
     </div>
-    <button class="publish" @click="saveArticle($route.query.aid)"><span>发布文章</span></button>
-    <button class="draft" @click="saveDraft($route.query.aid)"><span>存为草稿</span></button>
+    <button class="publish" @click="_saveArticle"><span>发布文章</span></button>
+    <button class="draft" @click="_saveDraft"><span>存为草稿</span></button>
   </div>
 </template>
 
@@ -68,21 +68,14 @@
     },
 
 
-    asyncData({store, route}) {
-      const {aid} = route.query
-      if (aid) {
-        return store.dispatch('getArticle', aid)
-      }
-    },
-
     created() {
-//      const {aid} = this.$route.query
-      this.isSaving_toggle(false)
-      this.isSend_toggle(false)
-//      if (aid) {
-//        return this.getArticle(aid)
-//      }
-      this.SET_ARTICLE({
+      const {aid} = this.$route.query
+//      this.isSaving_toggle(false)
+//      this.isSend_toggle(false)
+      if (aid) {
+        return this.getArticle(aid)
+      }
+      this.set_article({
         content: '',
         title: '',
         tags: ['']
@@ -129,20 +122,31 @@
       }
     },
     methods: {
-      ...mapMutations(['back/SET_ARTICLE', 'update_post_content', 'update_post_title', 'update_post_tags', 'isSaving_toggle', 'isSend_toggle', 'set_dialog']),
+//      ...mapMutations(['back/SET_ARTICLE', 'back/UPDATE_POST_CONTENT', 'back/UPDATE_POST_TITLE', 'back/UPDATE_POST_TAGS', 'isSaving_toggle', 'isSend_toggle', 'set_dialog']),
       ...mapMutations({
-        SET_ARTICLE: 'back/SET_ARTICLE',
-        UPDATE_POST_TITLE:'back/UPDATE_POST_TITLE',
-        UPDATE_POST_CONTENT:'back/UPDATE_POST_CONTENT',
-        UPDATE_POST_TAGS:'back/UPDATE_POST_TAGS',
+        set_article: 'back/SET_ARTICLE',
+        update_post_title:'back/UPDATE_POST_TITLE',
+        update_post_content:'back/UPDATE_POST_CONTENT',
+        update_post_tags:'back/UPDATE_POST_TAGS',
      /*   'isSaving_toggle',
         'isSend_toggle',*/
-        'set_dialog'
+        set_dialog:'SET_DIALOG'
       }),
-      ...mapActions(['SAVE_ARTICLE', 'getArticle', 'saveDraft']),
-      saveArticle() {
-        this.SAVE_ARTICLE({aid: this.$route.query.aid}).then(() => {
+//      ...mapActions(['SAVE_ARTICLE', 'getArticle', 'saveDraft']),
+      ...mapActions({
+        getArticle: 'back/GET_ARTICLE',
+        saveArticle: 'back/SAVE_ARTICLE',
+        saveDraft: 'back/SAVE_DRAFT'
+      }),
+
+      _saveArticle() {
+        this.saveArticle({aid: this.$route.query.aid}).then(() => {
           this.$router.push({name: 'posts'})
+        })
+      },
+      _saveDraft() {
+        this.saveDraft({aid: this.$route.query.aid}).then(() => {
+          this.$router.push({name: 'drafts'})
         })
       }
 

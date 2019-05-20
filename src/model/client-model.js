@@ -76,11 +76,34 @@ export default {
   saveArticle(payload) {
     console.log('payload',payload)
     if(payload.aid) {
-      return handleRequest(request.patch(`/articles/save/${payload.aid}`, payload))
+      return handleRequest(request.patch(`/articles/save/${payload.aid}`, payload.article))
     } else {
-      return handleRequest(request.post(`/articles/save`, payload))
+      return handleRequest(request.post(`/articles/save`, payload.article))
+    }
+  },
+
+  // 草稿
+
+  saveDrafts(payload) {
+    if (payload.aid) {
+      //局部更新
+      return handleRequest(request.patch(`/api/draft/${payload.aid}`, payload.draft))
+    } else {
+      return handleRequest(request.post(`/api/draft/`, payload.draft))
+
+ /*     return Vue.http.post('/api/draft/', state.article)/!*
+        .then(() => {
+          commit('isSaving_toggle', true)
+          router.push({name: 'drafts'})
+        }, () => {
+          alert('保存失败')
+        }).catch((err) => {
+          console.log(err)
+        })*!/*/
     }
   }
+
+
 
 
 }

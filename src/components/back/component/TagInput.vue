@@ -34,9 +34,9 @@ export default {
         },
         addTag () {
             this.tags.push('')      // 通过操作数组来增加空标签
-            setTimeout(() => {
+          /*  setTimeout(() => {
                 document.getElementsByClassName('newInput')[this.index + 1].focus()  // 新生成的空标签获得焦点
-            }, 0)
+            }, 0)*/
         },
         isRepeated () {
             let currentIndex = this.index
