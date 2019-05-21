@@ -28,7 +28,8 @@
       const {page, limit} = route.query
       return store.dispatch('back/GET_ALL_ARTICLES', {
         page: page || 1,
-        limit :limit || 4
+        limit :limit || 4,
+        isPublish: true
       })
     },
 
@@ -39,7 +40,11 @@
       nextPage() {
         if (this.noMoreData) {
           this.page ++
-          this.getAllArticles({page: this.page, limit: this.limit})
+          this.getAllArticles({
+            page: this.page,
+            limit: this.limit,
+            isPublish: true
+          })
         } else {
           alert('没有更多了！')
         }
@@ -49,7 +54,11 @@
           alert('已经到第一页咯')
         } else {
           this.page --
-          this.getAllArticles({page: this.page, limit: this.limit})
+          this.getAllArticles({
+            page: this.page,
+            limit: this.limit,
+            isPublish: true
+          })
         }
       }
     },

@@ -90,7 +90,7 @@ export default {
     SAVE_ARTICLE({state, commit}, payload) {
       // commit('isSaving_toggle', false)
       // if (!state.isSend) {
-        return model.saveArticle({article: state.article, aid: payload.aid})
+        return model.saveArticle({article: state.article, ...payload})
           .then(() => {
             // commit('isSaving_toggle', true)
             // commit('isSend_toggle', true)
@@ -99,10 +99,10 @@ export default {
           })
       // }
     },
-
+/*
     SAVE_DRAFTS({state, commit}, payload) {
-        return model.saveDrafts({draft: state.draft ,aid: payload.aid})
-    },
+        return model.saveDrafts({draft: state.draft, ...payload})
+    },*/
 
 
   }

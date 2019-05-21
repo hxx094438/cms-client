@@ -51,7 +51,9 @@
       ...mapActions({
         delArticle: 'back/DEL_ARTICLE'
       }),
-      ...mapMutations(['set_dialog']),
+      ...mapMutations({
+        set_dialog:'SET_DIALOG'
+      }),
       nextPage() {
         this.$emit('addPage')   // 传递给父组件
       },

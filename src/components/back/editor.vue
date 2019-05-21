@@ -140,12 +140,12 @@
       }),
 
       _saveArticle() {
-        this.saveArticle({aid: this.$route.query.aid}).then(() => {
+        this.saveArticle({aid: this.$route.query.aid, isPublish: true}).then(() => {
           this.$router.push({name: 'posts'})
         })
       },
       _saveDraft() {
-        this.saveDraft({aid: this.$route.query.aid}).then(() => {
+        this.saveArticle({aid: this.$route.query.aid, isPublish: false}).then(() => {
           this.$router.push({name: 'drafts'})
         })
       }

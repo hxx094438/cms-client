@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { createError } from './util'
+import {createError} from './util'
 
 // const baseUrl = typeof window === 'object' ? '/api' : 'http://127.0.0.1:3002/api'
 const baseUrl = 'http://127.0.0.1:3002/api'
@@ -9,19 +9,19 @@ const request = axios.create({
   baseURL: baseUrl
 })
 
-console.log('window',typeof window === 'object',request.baseURL)
+console.log('window', typeof window === 'object', request.baseURL)
 
 const handleRequest = (request) => {
-  console.log('baseUrl',baseUrl)
+  console.log('baseUrl', baseUrl)
   return new Promise((resolve, reject) => {
     request.then(resp => {
-      const {data , status} = resp
+      const {data, status} = resp
       // console.log('resp',resp)
       // console.log('data',data)
       if (data.code === 0) {
         resolve(data.data)
       } else {
-        return reject(createError(data.code,data.message))
+        return reject(createError(data.code, data.message))
       }
     }).catch(err => {
       console.log('handleRequest Error---------------', err)
@@ -44,16 +44,8 @@ export default {
   },
 
 
-
-
-
-
-
-
-
-
-
   getAllArticles(payload) {
+    console.log('------------payload', payload)
     return handleRequest(request.get('/articles/all', {
       params: payload
     }))
@@ -68,22 +60,26 @@ export default {
   },
 
 
-
   saveArticlePatch(payload) {
 
   },
 
   saveArticle(payload) {
-    console.log('payload',payload)
-    if(payload.aid) {
-      return handleRequest(request.patch(`/articles/save/${payload.aid}`, payload.article))
+    console.log('payload', payload)
+    if (payload.aid) {
+      return handleRequest(request.patch(`/articles/save/${payload.aid}`, {
+        article: payload.article,
+        isPublish: payload.isPublish
+      }))
     } else {
-      return handleRequest(request.post(`/articles/save`, payload.article))
+      return handleRequest(request.post(`/articles/save`, {
+        article: payload.article,
+        isPublish: payload.isPublish
+      }))
     }
   },
 
   // 草稿
-
   saveDrafts(payload) {
     if (payload.aid) {
       //局部更新
@@ -91,19 +87,17 @@ export default {
     } else {
       return handleRequest(request.post(`/api/draft/`, payload.draft))
 
- /*     return Vue.http.post('/api/draft/', state.article)/!*
-        .then(() => {
-          commit('isSaving_toggle', true)
-          router.push({name: 'drafts'})
-        }, () => {
-          alert('保存失败')
-        }).catch((err) => {
-          console.log(err)
-        })*!/*/
+      /*     return Vue.http.post('/api/draft/', state.article)/!*
+             .then(() => {
+               commit('isSaving_toggle', true)
+               router.push({name: 'drafts'})
+             }, () => {
+               alert('保存失败')
+             }).catch((err) => {
+               console.log(err)
+             })*!/*/
     }
   }
-
-
 
 
 }
