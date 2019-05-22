@@ -97,7 +97,7 @@
     },
     computed: {
       ...mapState({
-        article: state => state.back.article,
+        article: state => state.article.article,
         dialog: state => state.dialog,
       }),
       mdContent: {
@@ -124,28 +124,30 @@
     methods: {
 //      ...mapMutations(['back/SET_ARTICLE', 'back/UPDATE_POST_CONTENT', 'back/UPDATE_POST_TITLE', 'back/UPDATE_POST_TAGS', 'isSaving_toggle', 'isSend_toggle', 'set_dialog']),
       ...mapMutations({
-        set_article: 'back/SET_ARTICLE',
-        update_post_title:'back/UPDATE_POST_TITLE',
-        update_post_content:'back/UPDATE_POST_CONTENT',
-        update_post_tags:'back/UPDATE_POST_TAGS',
+        set_article: 'article/SET_ARTICLE',
+        update_post_title:'article/UPDATE_POST_TITLE',
+        update_post_content:'article/UPDATE_POST_CONTENT',
+        update_post_tags:'article/UPDATE_POST_TAGS',
      /*   'isSaving_toggle',
         'isSend_toggle',*/
         set_dialog:'SET_DIALOG'
       }),
 //      ...mapActions(['SAVE_ARTICLE', 'getArticle', 'saveDraft']),
       ...mapActions({
-        getArticle: 'back/GET_ARTICLE',
-        saveArticle: 'back/SAVE_ARTICLE',
-        saveDraft: 'back/SAVE_DRAFT'
+        getArticle: 'article/GET_ARTICLE',
+        saveArticle: 'article/SAVE_ARTICLE',
+//        saveDraft: 'article/SAVE_DRAFT'
       }),
 
       _saveArticle() {
         this.saveArticle({aid: this.$route.query.aid, isPublish: true}).then(() => {
+          this.isSaving = true
           this.$router.push({name: 'posts'})
         })
       },
       _saveDraft() {
         this.saveArticle({aid: this.$route.query.aid, isPublish: false}).then(() => {
+          this.isSaving = true
           this.$router.push({name: 'drafts'})
         })
       }

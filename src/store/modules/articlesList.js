@@ -1,3 +1,5 @@
+
+
 import model from '../../model/client-model'
 
 export default {
@@ -18,19 +20,9 @@ export default {
       state.noMoreData = page >= total
       // localStorage.setItem('articles',window.JSON.stringify(articles))
     },
-    SET_ARTICLE: (state, article) => {
-      state.article = article
-    },
 
-    UPDATE_POST_TITLE: (state, title) => {
-      state.article.title = title
-    },
-    UPDATE_POST_CONTENT: (state, content) => {
-      state.article.content = content
-    },
-    UPDATE_POST_TAGS: (state, tags) => {
-      state.article.tags = tasg
-    },
+
+
 
     //草稿
 
@@ -41,7 +33,6 @@ export default {
   },
   actions: {
     GET_ALL_ARTICLES ({state, commit}, params) {
-
       console.log('params',params)
       return model.getAllArticles(params).then( res => {
         commit('SET_POSTS_BASE_INFO', {...params,...res})
@@ -81,21 +72,15 @@ export default {
 
 
     SAVE_ARTICLE({state, commit}, payload) {
-      // commit('isSaving_toggle', false)
-      // if (!state.isSend) {
-        return model.saveArticle({article: state.article, ...payload})
-          .then(() => {
-            // commit('isSaving_toggle', true)
-            // commit('isSend_toggle', true)
-          }).catch((err) => {
-            console.log(err)
-          })
+      return model.saveArticle({article: state.article, ...payload})
+        .then(() => {
+          // commit('isSaving_toggle', true)
+          // commit('isSend_toggle', true)
+        }).catch((err) => {
+          console.log(err)
+        })
       // }
     },
-/*
-    SAVE_DRAFTS({state, commit}, payload) {
-        return model.saveDrafts({draft: state.draft, ...payload})
-    },*/
 
 
   }

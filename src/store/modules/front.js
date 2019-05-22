@@ -1,3 +1,4 @@
+import model from '../../model/client-model'
 
 export default {
   namespaced: true,
@@ -8,6 +9,6 @@ export default {
 
   },
   actions: {
-    
+
   }
 };

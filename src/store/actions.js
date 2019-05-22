@@ -84,7 +84,7 @@ export default {
     return Vue.http.delete('/api/article/' + payload.aid)
       .then(() => {
         if (payload.route.name === 'posts') dispatch('getAllArticles', {page: payload.page, limit: 4})
-        if (payload.route.name === 'drafts') dispatch('getAllDrafts', {page: payload.page, limit: 4})
+        if (payload.route.name === 'drafts') dispatch('getAllArticles', {page: payload.page, limit: 4})
         if (payload.route.name === 'search') router.push({name: 'posts'})
       }).catch((err) => {
         console.log(err)
@@ -129,43 +129,8 @@ export default {
       console.log(err)
     })
   },
-  // comment
-  summitComment({commit}, payload) {
-    return Vue.http.post('/api/comment', payload)
-  },
 
-  getAllComments({commit}, payload) {
-    return Vue.http.get('/api/comments', {params: {payload}})
-      .then(response => {
-        return response.json()
-      })         //箭头函数有{...}别忘了return...
-      .then(comments => {
-        commit('set_comments', comments)
-      }).catch((err) => {
-        console.log(err)
-      })
-  },
-  updateLike({state, commit}, payload) {            //返回一个comment对象
-    return Vue.http.patch('/api/comments/' + payload.id, {option: payload.option})
-      .then(response => {
-        return response.json()
-      })
-      .then(comment => {
-        state.comments.splice(payload.index, 1, comment)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  },
-  updateArticleLike({state, commit}, aid) {
-    return Vue.http.patch('/api/ArticleLike/' + aid, {aid: aid})
-      .then(response => {
-        console.log(response.data)
-        commit('set_article', response.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
+
+
 
 }

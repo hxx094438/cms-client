@@ -97,6 +97,13 @@ export default {
                console.log(err)
              })*!/*/
     }
+  },
+
+
+
+  // 评论
+  summitComment(payload) {
+    return handleRequest(request.post('/api/comment'))
   }
 
 

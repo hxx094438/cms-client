@@ -10,4 +10,5 @@ export default {
       resolveFn:() => {},
       rejectFn:() => {}
     },
+  user: {}
 };

@@ -7,6 +7,8 @@ import mutations from './mutations.js'
 
 
 import back from './modules/back'
+import articlesList from './modules/articlesList'
+import article from './modules/article'
 
 
 
@@ -78,6 +80,8 @@ export function createStore() {
     mutations,
     modules: {
       back,
+      articlesList,
+      article
     }
   })
 
@@ -88,6 +92,8 @@ export function createStore() {
       './actions',
       './getters',
       './modules/back',
+      './modules/articlesList',
+      './modules/article',
     ], () => {
       const newState = require('./state').default;
       const newMutations = require('./mutations').default;
@@ -100,6 +106,8 @@ export function createStore() {
         actions: newActions,
         modules: {
           back,
+          articlesList,
+          article
         }
       });
     });

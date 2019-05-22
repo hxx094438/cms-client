@@ -26,7 +26,7 @@
 
     asyncData ({ store, route }) {
       const {page, limit} = route.query
-      return store.dispatch('back/GET_ALL_ARTICLES', {
+      return store.dispatch('articlesList/GET_ALL_ARTICLES', {
         page: page || 1,
         limit :limit || 4,
         isPublish: true
@@ -35,7 +35,7 @@
 
     methods: {
       ...mapActions({
-        getAllArticles: 'back/GET_ALL_ARTICLES'
+        getAllArticles: 'articlesList/GET_ALL_ARTICLES'
       }),
       nextPage() {
         if (this.noMoreData) {
@@ -64,8 +64,8 @@
     },
     computed: {
       ...mapState({
-        articles: state => state.back.articles,
-        noMoreData: state => state.back.noMoreData,
+        articles: state => state.articlesList.articles,
+        noMoreData: state => state.articlesList.noMoreData,
 //        page: state => state.back.page,
 //        defaultLimit: state => state.back.defaultLimit
         }),

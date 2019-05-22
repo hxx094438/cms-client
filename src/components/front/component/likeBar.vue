@@ -35,21 +35,22 @@
         },
 
         methods: {
-            ...mapActions(['updateArticleLike']),
+            ...mapActions({
+              updateArticleLike: 'article/UPDATE_ARTICLE_LIKE'
+            }),
             giveLive(aid) {
                 console.log(this.isLike)
                 if (this.isLiked === false) {
                     this.updateArticleLike(aid).then(() => {
-
                         this.isLikeArr.push(this.article.aid)
-                        window.localStorage.setItem('LIKE_ARTICLS', JSON.stringify(this.isLikeArr))
+//                        window.localStorage.setItem('LIKE_ARTICLS', JSON.stringify(this.isLikeArr))
                     }).catch((err) => {
                         console.log(err)
                     })
                 }
             },
             init() {
-                this.isLikeArr = JSON.parse(window.localStorage.getItem('LIKE_ARTICLS') || '[]')
+//                this.isLikeArr = JSON.parse(window.localStorage.getItem('LIKE_ARTICLS') || '[]')
             }
         },
 
