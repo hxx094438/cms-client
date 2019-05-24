@@ -95,7 +95,7 @@ if (isDev) {
   })
 }
 
-console.log('readyPromise赋值',readyPromise.then(()=>{console.log('123132123123123')}))
+// console.log('readyPromise赋值',readyPromise.then(()=>{console.log('123132123123123')}))
 
 const staticPath = '../../dist'
 console.log('pathpath', path.join(__dirname, staticPath))

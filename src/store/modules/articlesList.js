@@ -7,7 +7,7 @@ export default {
   state: {
     page: 1,
     pageTotal: 0,
-    articles: {},
+    articles: [],
     noMoreData: false,
     defaultLimit: 4,
     article: {},
@@ -19,6 +19,10 @@ export default {
       state.articles = articles
       state.noMoreData = page >= total
       // localStorage.setItem('articles',window.JSON.stringify(articles))
+    },
+
+    ADD_ARTICLES(state, articles) {
+      state.articles = [...state.articles, ...articles]
     },
 
 
@@ -35,7 +39,11 @@ export default {
     GET_ALL_ARTICLES ({state, commit}, params) {
       console.log('params',params)
       return model.getAllArticles(params).then( res => {
-        commit('SET_POSTS_BASE_INFO', {...params,...res})
+        if(params.add) {
+          commit('ADD_ARTICLES',res)
+        } else {
+          commit('SET_POSTS_BASE_INFO', {...params,...res})
+        }
       })
     },
 

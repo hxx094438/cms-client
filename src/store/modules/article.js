@@ -5,7 +5,7 @@ export default {
   state: {
     page: 1,
     pageTotal: 0,
-    articles: {},
+    articles: [],
     article: {},
     noMoreData: false,
     comments: [],

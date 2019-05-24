@@ -71,11 +71,17 @@
     },
 
     created() {
+
+    },
+
+    mounted() {
       if(Object.keys(this.article).length === 0) {
         this.getArticle(this.$route.params.id)
       }
-
-//      this.initPage()
+      if(this.articles.length === 0) {
+        console.log('initPage')
+        this.initPage()
+      }
     },
     beforeRouteUpdate(to, from, next) {
       // 从foo/1跳到foo/2组件会复用，不会再执行created钩子函数，可以在这里执行
@@ -123,9 +129,8 @@
     // },
     computed: {
       ...mapState({
-        articles: state => state.articlesList.articles,
+        articles: state => state.article.articles || state.articlesList.articles,
         article: state => state.article.article,
-
         curTag: state => state.article.curTag,
       }),
 
@@ -159,22 +164,24 @@
       //     }
       // }
       initPage() {
-        if (this.articles.length == 0) {
-          this.$store.commit('get_all_articles', JSON.parse(window.localStorage.getItem('articles')))
-        }
+//        if (this.articles.length == 0) {
+//          this.$store.commit('get_all_articles', JSON.parse(window.localStorage.getItem('articles')))
+//        }
         // console.log(this.articles)
         // console.log(this.articles.length)
         // console.log(window.localStorage.getItem('articles'))
         // this.$store.dispatch('')
+
         const index = parseInt(this.$route.params.index);
         let page = parseInt(this.$route.params.page);
+        console.log('index',index,'page',page)
         if (index === 0) {
-          this.prePage = -1;
-          this.nextPage = 1;
+          this.prePage = -1
+          this.nextPage = 1
         } else if (index === this.articles.length - 1) {
-          this.prePage = index - 1;
+          this.prePage = index - 1
           this.getAllArticles({value: this.curTag, add: true, page: ++page})
-          this.nextPage = index + 1;
+          this.nextPage = index + 1
         } else {
           this.prePage = index - 1
           this.nextPage = index + 1
