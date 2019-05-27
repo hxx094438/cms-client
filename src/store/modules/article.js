@@ -30,6 +30,13 @@ export default {
     SET_ARTICLE: (state, article) => {
       state.article = article
     },
+    UPDATE_LIKE: (state, action)  => {
+      if(action === 'add') {
+        state.article.ArticleLike = state.article.ArticleLike++
+      } else {
+        state.article.ArticleLike = state.article.ArticleLike--
+      }
+    }
   },
   actions: {
     // GET_ALL_ARTICLES ({state, commit}, params) {
@@ -65,12 +72,19 @@ export default {
         })
       // }
     },
-
-    UPDATE_ARTICLE_LIKE({state, commit}, aid) {
-      return Vue.http.patch('/api/ArticleLike/' + aid, {aid: aid})
-        .then(response => {
-          console.log(response.data)
-          commit('set_article', response.data)
+    /**
+     *
+     * @param state
+     * @param commit
+     * @param payload  {aid , action : 'add', 'reduce'}
+     * @constructor
+     */
+    UPDATE_ARTICLE_LIKE({state, commit}, payload) {
+      console.log('UPDATE_ARTICLE_LIKE:payload',payload)
+      return model.updateArticleLike(payload)
+        .then(() => {
+          commit('UPDATE_LIKE',{action: payload.action})
+          commit('articlesList/UPDATE_ARTICLE_LIKE', payload)
         })
         .catch((err) => {
           console.log(err)

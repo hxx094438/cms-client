@@ -21,10 +21,16 @@ const handleRequest = (request) => {
       if (data.code === 0) {
         resolve(data.data)
       } else {
-        return reject(createError(data.code, data.message))
+        console.log(data.msg)
+        // this.set_dialog({
+        //   info: data.msg,
+        //   hasTwoBtn: false,
+        //   show: true
+        // })
       }
     }).catch(err => {
-      console.log('handleRequest Error---------------', err)
+      // return reject(createError(data.code, data.message))
+      console.log(err)
       // if (resp.status === 401) {
       //   reject(createError(401, 'need auth'))
       // }
@@ -57,6 +63,11 @@ export default {
 
   delArticle(aid) {
     return handleRequest(request.delete(`/articles/${aid}`))
+  },
+
+
+  updateArticleLike({ aid }) {
+    return handleRequest(request.patch(`/articles/like/${aid}`))
   },
 
 

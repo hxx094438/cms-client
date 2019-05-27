@@ -29,7 +29,7 @@
         </div>
       </div>
       <article-comment class="comment animated fadeIn"></article-comment>
-      <like-bar></like-bar>
+      <like-bar :article="article"></like-bar>
     </div>
 
     <router-link :to="{name: 'articles'}" class="iconfont icon-fanhui" tag="i"></router-link>

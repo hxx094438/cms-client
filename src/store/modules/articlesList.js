@@ -11,6 +11,7 @@ export default {
     noMoreData: false,
     defaultLimit: 4,
     article: {},
+    articlesLikeArr: [], // 子项为文章aid
   },
   mutations: {
     SET_POSTS_BASE_INFO (state, data) {
@@ -23,6 +24,15 @@ export default {
 
     ADD_ARTICLES(state, articles) {
       state.articles = [...state.articles, ...articles]
+    },
+
+    UPDATE_ARTICLE_LIKE(state, payload) {
+      if(state.payload.action === 'add') {
+        state.articlesLikeArr.push(payload.aid)
+      } else {
+        let index = state.articlesLikeArr.findIndex(payload.aid)
+        state.articlesLikeArr.splice(index,1)
+      }
     },
 
 
