@@ -66,7 +66,6 @@ export default {
     return handleRequest(request.delete(`/articles/${aid}`))
   },
 
-
   updateArticleLike({ aid }) {
     return handleRequest(request.patch(`/articles/like/${aid}`))
   },

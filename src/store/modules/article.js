@@ -31,6 +31,8 @@ export default {
       state.article = article
     },
     UPDATE_LIKE: (state, action)  => {
+      console.log('action',action)
+
       if(action === 'add') {
         state.article.ArticleLike = state.article.ArticleLike++
       } else {
@@ -87,12 +89,15 @@ export default {
      * @param payload  {aid , action : 'add', 'reduce'}
      * @constructor
      */
-    UPDATE_ARTICLE_LIKE({state, commit}, payload) {
+    UPDATE_ARTICLE_LIKE(store, payload) {
+      const {state, commit} = store
+      console.log('store',store)
       console.log('UPDATE_ARTICLE_LIKE:payload',payload)
       return model.updateArticleLike(payload)
-        .then(() => {
-          const {data, msg} = res
-          if( data.code === 0) {
+        .then( res => {
+          const {data, message, code} = res
+          console.log('UPDATE_ARTICLE_LIKE',res)
+          if( code === 0) {
             commit('UPDATE_LIKE',{action: payload.action})
             commit('articlesList/UPDATE_ARTICLE_LIKE', payload)
           }
