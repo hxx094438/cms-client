@@ -16,11 +16,12 @@ const handleRequest = (request) => {
   return new Promise((resolve, reject) => {
     request.then(resp => {
       const {data, status} = resp
-      // console.log('resp',resp)
       // console.log('data',data)
-      if (data.code === 0) {
-        resolve(data.data)
+      if (data.code === 40001) {
+        // 跳转登录页
       } else {
+        console.log('data',data)
+        resolve(data)
         console.log(data.msg)
         // this.set_dialog({
         //   info: data.msg,

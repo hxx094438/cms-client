@@ -50,10 +50,14 @@ export default {
       //   commit('isLoading_toggle', false)
       // }
       // document.title = '加载中...'
-      console.log('-----------111')
       return model.getArticle(aid)
         .then(res => {
-          commit('SET_ARTICLE', res)
+          const {data, msg, code} = res
+          console.log('-----------111',res)
+          if( code === 0) {
+            commit('SET_ARTICLE', data)
+          }
+
           // commit('set_headline', {content: state.article.title, animation: 'animated rotateIn'})
           // document.title = state.article.title
           // endLoading(commit, startTime, 'isLoading_toggle')
@@ -65,6 +69,10 @@ export default {
     SAVE_ARTICLE({state, commit}, payload) {
       return model.saveArticle({article: state.article, ...payload})
         .then(() => {
+          const {data, message} = res
+          if( data.code === 0) {
+            console.log('保存成功')
+          }
           // commit('isSaving_toggle', true)
           // commit('isSend_toggle', true)
         }).catch((err) => {
@@ -83,8 +91,11 @@ export default {
       console.log('UPDATE_ARTICLE_LIKE:payload',payload)
       return model.updateArticleLike(payload)
         .then(() => {
-          commit('UPDATE_LIKE',{action: payload.action})
-          commit('articlesList/UPDATE_ARTICLE_LIKE', payload)
+          const {data, msg} = res
+          if( data.code === 0) {
+            commit('UPDATE_LIKE',{action: payload.action})
+            commit('articlesList/UPDATE_ARTICLE_LIKE', payload)
+          }
         })
         .catch((err) => {
           console.log(err)
@@ -98,8 +109,13 @@ export default {
     },
     GET_ALL_COMMENTS({commit}, payload) {
       return Vue.http.get('/api/comments', {params: {payload}})
-        .then(response => {
-          return response.json()
+        .then(res => {
+          const {data, msg} = res
+          if( data.code === 0) {
+            commit('UPDATE_LIKE',{action: payload.action})
+            commit('articlesList/UPDATE_ARTICLE_LIKE', payload)
+          }
+          return data.json()
         })         //箭头函数有{...}别忘了return...
         .then(comments => {
           commit('set_comments', comments)

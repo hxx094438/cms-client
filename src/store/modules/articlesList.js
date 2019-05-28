@@ -49,11 +49,19 @@ export default {
     GET_ALL_ARTICLES ({state, commit}, params) {
       console.log('params',params)
       return model.getAllArticles(params).then( res => {
-        if(params.add) {
-          commit('ADD_ARTICLES',res)
-        } else {
-          commit('SET_POSTS_BASE_INFO', {...params,...res})
+        const {data, message, code} = res
+        console.log('all','data:',data.articles,'code:',code)
+        if( code === 0) {
+          console.log('------------------11111111111')
+          if(params.add) {
+            commit('ADD_ARTICLES',data.articles)
+          } else {
+            console.log('------------------222222222',{...params,...data.articles})
+
+            commit('SET_POSTS_BASE_INFO', {...params,...data})
+          }
         }
+
       })
     },
 
@@ -61,9 +69,13 @@ export default {
     DEL_ARTICLE({dispatch}, payload) {
       return model.delArticle(payload.aid)
         .then(() => {
-          if (payload.route.name === 'posts') dispatch('GET_ALL_ARTICLES', {page: payload.page, limit: 4})
-          if (payload.route.name === 'drafts') dispatch('getAllDrafts', {page: payload.page, limit: 4})
-          if (payload.route.name === 'search') router.push({name: 'posts'})
+          const {data, message} = res
+          if( data.code === 0) {
+            if (payload.route.name === 'posts') dispatch('GET_ALL_ARTICLES', {page: payload.page, limit: 4})
+            if (payload.route.name === 'drafts') dispatch('getAllDrafts', {page: payload.page, limit: 4})
+            if (payload.route.name === 'search') router.push({name: 'posts'})
+          }
+
         }).catch((err) => {
           console.log(err)
         })
@@ -79,7 +91,10 @@ export default {
       console.log('-----------111')
       return model.getArticle(aid)
         .then(res => {
-          commit('SET_ARTICLE', res)
+          const {data, message} = res
+          if( data.code === 0) {
+            commit('SET_ARTICLE', data)
+          }
           // commit('set_headline', {content: state.article.title, animation: 'animated rotateIn'})
           // document.title = state.article.title
           // endLoading(commit, startTime, 'isLoading_toggle')
@@ -92,6 +107,10 @@ export default {
     SAVE_ARTICLE({state, commit}, payload) {
       return model.saveArticle({article: state.article, ...payload})
         .then(() => {
+          const {data, message} = res
+          if( data.code === 0) {
+            console.log('保存成功')
+          }
           // commit('isSaving_toggle', true)
           // commit('isSend_toggle', true)
         }).catch((err) => {
