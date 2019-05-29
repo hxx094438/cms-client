@@ -39,14 +39,21 @@
 
     methods: {
       ...mapActions({
-        updateArticleLike: 'article/UPDATE_ARTICLE_LIKE'
+        updateArticleLike: 'article/UPDATE_ARTICLE_LIKE',
+        updateArticleLikeArr : 'articlesList/UPDATE_ARTICLE_LIKE_ARR'
       }),
       giveLive(aid) {
         console.log('aid',aid)
         if (!this.isLiked) {
           this.updateArticleLike({aid: aid, action: 'add'})
+            .then(() => {
+              this.updateArticleLikeArr({aid: aid, action: 'add'})
+            })
         } else {
           this.updateArticleLike({aid: aid, action: 'reduce'})
+            .then(() => {
+              this.updateArticleLikeArr({aid: aid, action: 'reduce'})
+            })
         }
       },
       init() {

@@ -27,7 +27,7 @@ export default {
     },
 
     UPDATE_ARTICLE_LIKE(state, payload) {
-      if(state.payload.action === 'add') {
+      if(payload.action === 'add') {
         state.articlesLikeArr.push(payload.aid)
       } else {
         let index = state.articlesLikeArr.findIndex(payload.aid)
@@ -118,6 +118,10 @@ export default {
         })
       // }
     },
+
+    UPDATE_ARTICLE_LIKE_ARR({state, commit}, payload) {
+      commit('UPDATE_ARTICLE_LIKE',payload)
+    }
 
 
   }

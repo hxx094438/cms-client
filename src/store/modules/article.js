@@ -32,12 +32,13 @@ export default {
     },
     UPDATE_LIKE: (state, action)  => {
       console.log('action',action)
-
       if(action === 'add') {
         state.article.ArticleLike = state.article.ArticleLike++
       } else {
         state.article.ArticleLike = state.article.ArticleLike--
       }
+      console.log('state.article.ArticleLike',state.article.ArticleLike)
+
     }
   },
   actions: {
@@ -93,18 +94,22 @@ export default {
       const {state, commit} = store
       console.log('store',store)
       console.log('UPDATE_ARTICLE_LIKE:payload',payload)
-      return model.updateArticleLike(payload)
-        .then( res => {
-          const {data, message, code} = res
-          console.log('UPDATE_ARTICLE_LIKE',res)
-          if( code === 0) {
-            commit('UPDATE_LIKE',{action: payload.action})
-            commit('articlesList/UPDATE_ARTICLE_LIKE', payload)
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+      return new Promise(resolve => {
+        model.updateArticleLike(payload)
+          .then( res => {
+            const {data, message, code} = res
+            console.log('UPDATE_ARTICLE_LIKE',res)
+            if( code === 0) {
+              commit('UPDATE_LIKE',{action: payload.action})
+              resolve()
+              // commit('articlesList/UPDATE_ARTICLE_LIKE', payload)
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      })
+
     },
 
 
