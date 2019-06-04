@@ -18,7 +18,6 @@
 
   export default {
     name: 'likeBar',
-    props: ['article'],
     data() {
       return {}
     },
@@ -27,11 +26,9 @@
     },
     computed: {
       ...mapState({
-        articlesLikeArr: state => state.articlesList.articlesLikeArr
+        articlesLikeArr: state => state.articlesList.articlesLikeArr,
+        article: state => state.article.article
       }),
-      aaa(){
-        return this.article.aid
-      },
       isLiked() {
         return this.articlesLikeArr.includes(this.article.aid)
       }

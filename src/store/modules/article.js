@@ -30,12 +30,11 @@ export default {
     SET_ARTICLE: (state, article) => {
       state.article = article
     },
-    UPDATE_LIKE: (state, action)  => {
-      console.log('action',action)
+    UPDATE_LIKE: (state, {action})  => {
       if(action === 'add') {
-        state.article.ArticleLike = state.article.ArticleLike++
+        state.article.ArticleLike++
       } else {
-        state.article.ArticleLike = state.article.ArticleLike--
+        state.article.ArticleLike--
       }
       console.log('state.article.ArticleLike',state.article.ArticleLike)
 

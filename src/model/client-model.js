@@ -50,7 +50,6 @@ export default {
     return handleRequest(request.post('/admin/login', payload))
   },
 
-
   getAllArticles(payload) {
     console.log('------------payload', payload)
     return handleRequest(request.get('/articles/all', {
@@ -69,7 +68,6 @@ export default {
   updateArticleLike({ aid }) {
     return handleRequest(request.patch(`/articles/like/${aid}`))
   },
-
 
   saveArticlePatch(payload) {
 
@@ -114,7 +112,7 @@ export default {
 
   // 评论
   summitComment(payload) {
-    return handleRequest(request.post('/api/comment'))
+    return handleRequest(request.post('/api/comment',payload))
   }
 
 
