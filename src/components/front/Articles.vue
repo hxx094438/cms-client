@@ -5,6 +5,7 @@
                 <div class="tagFlex">
                     <button
                           v-for="(tag, index) in allTags"
+                          :key="index"
                           v-bind:class="{activeBtn: selectIndex === index}"
                           v-on:click="switchTag({value: tag, page: 1}, index, tag)"
                           >
@@ -12,7 +13,12 @@
                     </button>
                 </div>
             </div>
-            <div v-for="(article, index) in reducedArticles" id="article" class="animated fadeIn">
+            <div 
+            v-for="(article, index) in reducedArticles"
+            :key="index" 
+            id="article" 
+            class="animated fadeIn"
+            >
                 <router-link :to="{name:'article', params:{id: article.aid, index: index, page:page}, hash: '#article'}" tag="a" exact class="title_1">{{article.title}}
                 </router-link>
                 <div class="option">

@@ -8,11 +8,29 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const isDev = process.env.NODE_ENV === 'development'
 
+const devServer = {
+  port: process.env.PORT || 8083,
+  host: '0.0.0.0',
+  overlay: {
+    errors: true
+  },
+  headers: { 'Access-Control-Allow-Origin': '*' },
+  historyApiFallback: {
+    index: '../index.html'
+  },
+  hot: true,
+  disableHostCheck: true // 允许任何host域名访问
+};
+
+
 let webpackConfig = merge(baseWebpackConfig, {
+    target: 'web',
+
     entry: {
       app: './src/entry-client.js',
       // vendor: ['vue', 'vue-router', 'vuex', 'vuex-router-sync', 'axios']
     },
+    devServer,
 
     module: {
       rules: [

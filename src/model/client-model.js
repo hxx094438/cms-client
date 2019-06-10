@@ -112,7 +112,7 @@ export default {
 
   // 评论
   summitComment(payload) {
-    return handleRequest(request.post('/api/comment/save',payload))
+    return handleRequest(request.post('/comment/save',payload))
   }
 
 

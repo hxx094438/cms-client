@@ -95,6 +95,9 @@
 
 
     },
+    mounted() {
+
+    },
     computed: {
       // ...mapGetters(['likes']),
       ...mapState({
@@ -137,6 +140,7 @@
 
 
       summit() {
+        console.log('提交')
         const re = /^[\w_-]+@[\w_-]+\.[\w\\.]+$/
         if (!this.name || !this.content) {
           this.set_dialog({
@@ -186,6 +190,8 @@
         localStorage.setItem('e-mail', this.address)
         localStorage.setItem('reviewer', this.name)
         // localStorage.setItem('gravatar',this.gravatar)
+        console.log('提交2')
+
         this.summitComment({
           imgName: this.imgName,
           name: this.name,
@@ -198,6 +204,7 @@
           this.summitFlag = false
           this.getAllComments({id: this.$route.params.id})
         }).catch((err) => {
+          this.summitFlag = false
           this.set_dialog({
             info: err.body,
             hasTwoBtn: false,

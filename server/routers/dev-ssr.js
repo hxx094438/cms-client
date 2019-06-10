@@ -45,7 +45,7 @@ const handleSSR = async (ctx) => {
   }
   console.log('请求本地manifest-----1')
   const clientManifestResp = await axios.get(
-    'http://127.0.0.1:8080/dist/vue-ssr-client-manifest.json'
+    'http://127.0.0.1:8083/dist/vue-ssr-client-manifest.json'
   );
   console.log('请求本地manifest-----2',typeof clientManifestResp)
 
