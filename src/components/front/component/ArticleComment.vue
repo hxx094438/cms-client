@@ -67,9 +67,9 @@
         },
       }
     },
-    asyncData({store, route}) {
-      return store.dispatch('article/GET_ALL_COMMENTS', route.params.id)
-    },
+    // asyncData({store, route}) {
+    //   return store.dispatch('article/GET_ALL_COMMENTS', route.params.id)
+    // },
     created() {
 //      if(Array.isArray(this.comments)) {
 //        // 加载所有评论
@@ -92,8 +92,6 @@
 //      } else {
 //        this.$store.state.likeArr = []
 //      }
-
-
     },
     mounted() {
 
@@ -103,7 +101,8 @@
       ...mapState({
         comments: state => state.article.comments,
         user: state => state.user,
-        likeArr: state => state.article.likeArr
+        likeArr: state => state.article.likeArr,
+        dialog: state => state.dialog
       }),
       // likeArr() {                            // 访问者点赞了哪些评论的数组
       //     if (localStorage.getItem(this.$route.params.id)) {
@@ -121,7 +120,9 @@
         getAllComments:'article/GET_ALL_COMMENTS',
         updateLike:'article/UPDATE_LIKE'
       }),
-      ...mapMutations(['set_dialog']),
+      ...mapMutations({
+        set_dialog: 'SET_DIALOG'
+      }),
 
       gravatar(address) {
         if (!this.regexs.email.test(address)) return null
@@ -190,8 +191,6 @@
         localStorage.setItem('e-mail', this.address)
         localStorage.setItem('reviewer', this.name)
         // localStorage.setItem('gravatar',this.gravatar)
-        console.log('提交2')
-
         this.summitComment({
           imgName: this.imgName,
           name: this.name,

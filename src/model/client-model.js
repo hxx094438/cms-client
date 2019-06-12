@@ -12,7 +12,7 @@ const request = axios.create({
 console.log('window', typeof window === 'object', request.baseURL)
 
 const handleRequest = (request) => {
-  console.log('baseUrl', baseUrl)
+  // console.log('baseUrl', baseUrl)
   return new Promise((resolve, reject) => {
     request.then(resp => {
       const {data, status} = resp
@@ -20,7 +20,7 @@ const handleRequest = (request) => {
       if (data.code === 40001) {
         // 跳转登录页
       } else {
-        console.log('data',data)
+        // console.log('data',data)
         resolve(data)
         console.log(data.msg)
         // this.set_dialog({
@@ -111,9 +111,23 @@ export default {
 
 
   // 评论
+
   summitComment(payload) {
     return handleRequest(request.post('/comment/save',payload))
+  },
+
+  getAllComments(payload) {
+    const {articleId, sort} = payload
+    console.log('payload',articleId, sort)
+    return handleRequest(request.get('/comment/all', {
+      params: {
+        articleId: articleId,
+        sort : sort
+      }
+    }))
   }
+
+
 
 
 }

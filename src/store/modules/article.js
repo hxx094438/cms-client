@@ -37,8 +37,14 @@ export default {
         state.article.ArticleLike--
       }
       console.log('state.article.ArticleLike',state.article.ArticleLike)
+    },
 
-    }
+    SET_COMMENTS: (state, comments) => {
+      console.log('comments',comments)
+      state.comments = comments
+    },
+
+
   },
   actions: {
     // GET_ALL_ARTICLES ({state, commit}, params) {
@@ -55,7 +61,6 @@ export default {
       return model.getArticle(aid)
         .then(res => {
           const {data, msg, code} = res
-          console.log('-----------111',res)
           if( code === 0) {
             commit('SET_ARTICLE', data)
           }
@@ -117,17 +122,17 @@ export default {
       return model.summitComment(payload)
     },
     GET_ALL_COMMENTS({commit}, payload) {
-      return Vue.http.get('/api/comments', {params: {payload}})
+      return model.getAllComments(payload)
         .then(res => {
-          const {data, msg} = res
-          if( data.code === 0) {
-            commit('UPDATE_LIKE',{action: payload.action})
-            commit('articlesList/UPDATE_ARTICLE_LIKE', payload)
+          console.log('------comment',res)
+          const {data, code} = res
+          if( code === 0) {
+            console.log('data',data)
+            // commit('UPDATE_LIKE',{action: payload.action})
+            // commit('articlesList/UPDATE_ARTICLE_LIKE', payload)
+            commit('SET_COMMENTS', data)
+
           }
-          return data.json()
-        })         //箭头函数有{...}别忘了return...
-        .then(comments => {
-          commit('set_comments', comments)
         }).catch((err) => {
           console.log(err)
         })

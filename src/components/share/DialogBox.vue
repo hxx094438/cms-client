@@ -18,7 +18,9 @@ export default {
         ...mapState(['dialog'])
     },
     methods: {
-        ...mapMutations(['set_dialog']),
+        ...mapMutations({
+          set_dialog: 'SET_DIALOG'
+        }),
         close () {
             this.set_dialog({
                 info: '',

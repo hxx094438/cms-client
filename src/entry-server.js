@@ -12,12 +12,17 @@ export default context => {
   return new Promise((resolve, reject) => {
     const s = isDev && Date.now()
     const { app, router, store } = createApp()
-    console.log('entry-sercer:',typeof context)
+    // console.log('entry-sercer:',typeof context)
 
     const { url } = context
 
     const { fullPath } = router.resolve(url).route
     console.log('fullPath',fullPath,'url',url)
+
+    if(fullPath.indexOf('/static') > -1) {
+      console.log('静态资源路径')
+      return
+    }
     if (fullPath !== url) {
       return reject({ url: fullPath })
     }
@@ -28,7 +33,7 @@ export default context => {
     router.onReady(() => {
     
       const matchedComponents = router.getMatchedComponents()
-      console.log('matchedComponents','url',url,matchedComponents.length)
+      // console.log('matchedComponents','url',url,matchedComponents,matchedComponents.length)
       // no matched routes
       if (!matchedComponents.length) {
         return reject({ code: 404 })

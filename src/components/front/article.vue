@@ -67,7 +67,13 @@
     },
 
     asyncData({store, route}) {
-      return store.dispatch('article/GET_ARTICLE', route.params.id)
+      console.log('asyncdata-------11---调用',route.params.id)
+      
+      return Promise.all([
+        store.dispatch('article/GET_ARTICLE', route.params.id),
+        store.dispatch('article/GET_ALL_COMMENTS', {articleId: route.params.id})
+      ])
+
     },
 
     created() {
