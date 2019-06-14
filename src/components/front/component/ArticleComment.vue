@@ -140,6 +140,7 @@
       },
 
 
+/*
       summit() {
         console.log('提交')
         const re = /^[\w_-]+@[\w_-]+\.[\w\\.]+$/
@@ -212,6 +213,10 @@
           this.summitFlag = false
           this.name = ''
         })
+      },
+*/
+      summit () {
+        this.$dialog()
       },
       reply(name) {
         this.content = '@' + name + ': '

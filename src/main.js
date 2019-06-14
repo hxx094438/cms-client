@@ -4,7 +4,6 @@ import Vue from 'vue'
 import axios from 'axios'
 import App from './App'
 
-
 import { createStore } from './store'
 import { createRouter } from './router'
 import { sync } from 'vuex-router-sync'
@@ -12,8 +11,8 @@ import { sync } from 'vuex-router-sync'
 import './assets/css/index.scss'
 
 axios.defaults.withCredentials = true
-Vue.prototype.$http = axios
 
+Vue.prototype.$http = axios
 Vue.filter('toDate', (date) => {
     if (date) {
         const d = new Date(date)

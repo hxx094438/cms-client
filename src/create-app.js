@@ -15,10 +15,13 @@ import './assets/css/index.scss'
 
 // import './assets/styles/global.styl'
 import axios from 'axios'
+import dialog from '../src/modules/dialog'
+
 axios.defaults.withCredentials = true
 Vue.prototype.$http = axios
 
 Vue.use(Meta);
+Vue.use(dialog)
 
 
 
@@ -47,6 +50,32 @@ Vue.filter('toTag', (arr) => {
       return arr.join('，')
   }
 })
+
+// 用于处理行尾省略号的过滤器
+Vue.filter('textLineBreak', (text, maxLength, lineBreakMode) => {
+  if (lineBreakMode === null || lineBreakMode === undefined) {
+    lineBreakMode = LineBreakMode.EllipsisTruncatingTail
+  }
+  switch (lineBreakMode) {
+    case LineBreakMode.WrappingTruncatingTail:
+      return text.substr(0, maxLength);
+    case LineBreakMode.WrappingTruncatingHead:
+      return text.substr(-maxLength);
+    case LineBreakMode.EllipsisTruncatingTail:
+      return text.substr(0, maxLength) + (text.length > maxLength ? '...' : '');
+    case LineBreakMode.EllipsisTruncatingMiddle:
+      let resultText = text.substr(0, maxLength);
+      if (text.length > maxLength) {
+        return resultText.substr(0, parseInt(maxLength / 2)) + '...' + resultText.substr(parseInt(maxLength / 2));
+      }
+      return resultText;
+    case LineBreakMode.EllipsisTruncatingHead:
+      return (text.length > maxLength ? '...' : '') + text.substr(-maxLength);
+  }
+  return text;
+})
+
+
 
 
 Vue.use(VueRouter)
