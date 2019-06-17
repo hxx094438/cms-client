@@ -1,11 +1,10 @@
 import Vue from 'vue'
 import Dialog from '../components/share/dialog.vue'
 
+
 /**
  *
  * @param opts {
- *
- *
  *
  *
  * }
@@ -22,7 +21,9 @@ export const dialog = opts => {
     }
   })
 
-  const component = dialogInstance.$mount()
+  const cm = dialogInstance.$mount()
+  const component = cm.$children[0]
+
   document.body.appendChild(component.$el)
 
   return new Promise((resolve, reject) => {
@@ -32,8 +33,9 @@ export const dialog = opts => {
      *    index : Number     当前按钮索引
      *  }
      */
+
     component.$on('close', (...args) => {
-      const { index } = index
+      const { index } = args
       document.body.removeChild(component.$el)
       component.$destroy()
       typeof onClose === 'function' && onClose(...args)
@@ -43,9 +45,6 @@ export const dialog = opts => {
     })
   })
   // console.log('children',dialogInstance.$children[0])
-
-
-
 }
 
 const instance = Vue => {

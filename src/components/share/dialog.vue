@@ -26,12 +26,7 @@
         default: () => {
           return [
             {
-              label: '取消',
-              onClick: () => {
-              }
-            },
-            {
-              label: '确定',
+              label: '好的',
               onClick: () => {
               }
             }
@@ -44,26 +39,17 @@
 
     },
     methods: {
-      // ...mapMutations({
-      //   set_dialog: "SET_DIALOG"
-      // }),
-
 
       handleClick(index) {
         //对应button的回调执行
         if (typeof this.buttons[index].onClick === 'function') {
-          this.buttons[index].onClick()
-          this.$emit('close', this.buttons[index], index)        }
+          this.buttons[index].onClick
+        }
+        this.$emit('close', {
+          btn: this.buttons[index],
+          index: index
+        })
       }
-
-//      confirm() {
-//        this.dialog.show = false;
-//        this.dialog.resolveFn();
-//      },
-//      cancel() {
-//        this.dialog.show = false;
-//        this.dialog.rejectFn();
-//      }
     }
   };
 </script>
