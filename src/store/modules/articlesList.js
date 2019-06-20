@@ -32,7 +32,10 @@ export default {
         console.log('1111111111')
         state.articlesLikeArr.push(payload.aid)
       } else {
-        let index = state.articlesLikeArr.findIndex(payload.aid)
+        console.log('state.articlesLikeArr',typeof state.articlesLikeArr.findIndex)
+        let index = (state.articlesLikeArr).findIndex((item) => {
+          item === payload.aid
+        })
         state.articlesLikeArr.splice(index,1)
       }
     },

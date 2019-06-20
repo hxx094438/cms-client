@@ -40,6 +40,7 @@
         updateArticleLikeArr : 'articlesList/UPDATE_ARTICLE_LIKE_ARR'
       }),
       giveLive(aid) {
+        console.log('dianzan')
         if (!this.isLiked) {
           this.updateArticleLike({aid: aid, action: 'add'})
             .then(() => {
@@ -48,6 +49,7 @@
         } else {
           this.updateArticleLike({aid: aid, action: 'reduce'})
             .then(() => {
+              console.log('reduce')
               this.updateArticleLikeArr({aid: aid, action: 'reduce'})
             })
         }
