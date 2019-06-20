@@ -49,7 +49,7 @@ export const dialog = opts => {
 
 const instance = Vue => {
   Vue.component('Dialog',Dialog)
-  Vue.prototype.$dialog = dialog
+  Vue.prototype.set_dialog = dialog
 }
 
 export default instance

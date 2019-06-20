@@ -120,9 +120,9 @@
         getAllComments:'article/GET_ALL_COMMENTS',
         updateLike:'article/UPDATE_LIKE'
       }),
-      ...mapMutations({
+    /*  ...mapMutations({
         set_dialog: 'SET_DIALOG'
-      }),
+      }),*/
 
       gravatar(address) {
         if (!this.regexs.email.test(address)) return null
@@ -190,7 +190,8 @@
         }).then(() => {
           this.content = ''
           this.summitFlag = false
-          this.getAllComments({id: this.$route.params.id})
+          //重新加载评论列表
+          this.getAllComments({articleId: this.$route.params.id})
         }).catch((err) => {
           this.summitFlag = false
           this.set_dialog({

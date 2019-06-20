@@ -40,7 +40,6 @@
         updateArticleLikeArr : 'articlesList/UPDATE_ARTICLE_LIKE_ARR'
       }),
       giveLive(aid) {
-        console.log('aid',aid)
         if (!this.isLiked) {
           this.updateArticleLike({aid: aid, action: 'add'})
             .then(() => {

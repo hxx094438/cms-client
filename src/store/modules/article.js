@@ -96,8 +96,6 @@ export default {
      */
     UPDATE_ARTICLE_LIKE(store, payload) {
       const {state, commit} = store
-      console.log('store',store)
-      console.log('UPDATE_ARTICLE_LIKE:payload',payload)
       return new Promise(resolve => {
         model.updateArticleLike(payload)
           .then( res => {

@@ -27,7 +27,9 @@ export default {
     },
 
     UPDATE_ARTICLE_LIKE(state, payload) {
+      console.log('payload',payload)
       if(payload.action === 'add') {
+        console.log('1111111111')
         state.articlesLikeArr.push(payload.aid)
       } else {
         let index = state.articlesLikeArr.findIndex(payload.aid)
