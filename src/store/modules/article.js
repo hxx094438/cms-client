@@ -137,16 +137,17 @@ export default {
     },
 
     UPDATE_LIKE({state, commit}, payload) {            //返回一个comment对象
-      return Vue.http.patch('/api/comments/' + payload.id, {option: payload.option})
-        .then(response => {
-          return response.json()
-        })
-        .then(comment => {
-          state.comments.splice(payload.index, 1, comment)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+      return model.updateCommentLike(payload)
+        // .then(res => {
+        //   // return response.json()
+        //
+        // })
+        // .then(comment => {
+        //   state.comments.splice(payload.index, 1, comment)
+        // })
+        // .catch((err) => {
+        //   console.log(err)
+        // })
     },
   }
 };

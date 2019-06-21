@@ -128,6 +128,11 @@ export default {
         sort : sort
       }
     }))
+  },
+
+
+  updateCommentLike(payload) {
+    return handleRequest(request.patch('/comment/like', payload))
   }
 
 

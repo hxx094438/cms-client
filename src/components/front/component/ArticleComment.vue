@@ -20,9 +20,9 @@
       <div class='summary'>
         <p>评论数 {{comments.length}}</p>
         <p>
-          <span @click="getAllComments({id: $route.params.id})">最早 </span>|
-          <span @click="getAllComments({id: $route.params.id, sort: 'date'})">最新 </span>|
-          <span @click="getAllComments({id: $route.params.id, sort: 'like'})"> 最热</span>
+          <span @click="getAllComments({articleId: $route.params.id})">最早 </span>|
+          <span @click="getAllComments({articleId: $route.params.id, sort: 'date'})">最新 </span>|
+          <span @click="getAllComments({articleId: $route.params.id, sort: 'like'})"> 最热</span>
         </p>
       </div>
       <div class='comments' v-for='(comment,index) in comments' :key="comment._id">
@@ -102,7 +102,9 @@
         comments: state => state.article.comments,
         user: state => state.user,
         likeArr: state => state.article.likeArr,
-        dialog: state => state.dialog
+//        dialog: state => state.dialog,
+        article: state => state.article.article,
+
       }),
       // likeArr() {                            // 访问者点赞了哪些评论的数组
       //     if (localStorage.getItem(this.$route.params.id)) {
@@ -190,6 +192,7 @@
         }).then(() => {
           this.content = ''
           this.summitFlag = false
+          this.article.comment_n++
           //重新加载评论列表
           this.getAllComments({articleId: this.$route.params.id})
         }).catch((err) => {
@@ -208,22 +211,24 @@
         this.content = '@' + name + ': '
         this.$refs.textBox.focus()
       },
+
       addLike(id, index) {
-        const i = this.$store.state.likeArr.indexOf(index)           //判断这个index是否存在数组中
+        const i = this.likeArr.indexOf(index)           //判断这个index是否存在数组中
         if (i === -1) {
           this.updateLike({id: id, option: 'add', index: index}).then(() => {
-            this.$store.state.likeArr.push(index)            //将点赞索引加入数组中
+            this.likeArr.push(index)            //将点赞索引加入数组中
+            this.comments[index].like ++
             // this.getAllComments({id: this.$route.params.id})
-            localStorage[this.$route.params.id] = JSON.stringify(this.$store.state.likeArr)  // 将点赞情况数组转化为对象保存在localStorage中
+            localStorage[this.$route.params.id] = JSON.stringify(this.likeArr)  // 将点赞情况数组转化为对象保存在localStorage中
           }).catch((err) => {
             console.log(err)
           })
         } else {
           this.updateLike({id: id, option: 'drop', index: index}).then(() => {
-            this.$store.state.likeArr.splice(i, 1)           //将取消点赞的索引从数组中移除
-
+            this.likeArr.splice(i, 1)           //将取消点赞的索引从数组中移除
+            this.comments[index].like --
             //  this.getAllComments({id: this.$route.params.id})
-            localStorage[this.$route.params.id] = JSON.stringify(this.$store.state.likeArr)  // 将点赞情况数组转化为对象保存在localStorage中
+            localStorage[this.$route.params.id] = JSON.stringify(this.likeArr)  // 将点赞情况数组转化为对象保存在localStorage中
           }).catch((err) => {
             console.log(err)
           })
