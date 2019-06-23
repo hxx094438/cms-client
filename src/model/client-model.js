@@ -9,6 +9,11 @@ const request = axios.create({
   baseURL: baseUrl
 })
 
+
+function getBaseInfo () {
+  
+}
+
 console.log('window', typeof window === 'object', request.baseURL)
 
 const handleRequest = (request) => {

@@ -77,7 +77,6 @@
     },
 
     created() {
-
     },
 
     mounted() {
@@ -88,6 +87,8 @@
         console.log('initPage')
         this.initPage()
       }
+    },
+    beforeMount(){
     },
     beforeRouteUpdate(to, from, next) {
       // 从foo/1跳到foo/2组件会复用，不会再执行created钩子函数，可以在这里执行
