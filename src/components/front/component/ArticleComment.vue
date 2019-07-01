@@ -31,13 +31,25 @@
         </p>
       </div>
       <div class="comments" v-for="(comment,index) in comments" :key="comment._id">
-        <div id="info" :class="comment.imgName">
+        <img class="avatar" :src="gravatar(comment.author.name) || '../../../../static/fuck.jpg'">
+
+        <div class="info-box" :class="comment.imgName">
           <div class="commentName">
-            <img :src="gravatar(comment.author.name)">
             <p class="index">#{{index + 1}}</p>
             <p>{{comment.author.name}}</p>
           </div>
-
+          <div class="reply-box" v-if="comment.replyId">
+            <p class="reply-name">
+              <a>
+                <strong>{{findReplyContent(comment.replyId).author.name}}</strong>
+              </a>
+            </p>
+            <div class="reply-content">
+              <p>
+                {{findReplyContent(comment.replyId).content}}
+              </p>
+            </div>
+          </div>
           <p class="text">{{comment.content}}</p>
           <div class="options">
             <p class="commentDate">{{comment.date | to_date}}</p>
@@ -75,7 +87,7 @@ export default {
       replyId: undefined,
       content: "",
       receiver: "", //接受回复的人
-      author: {},
+      author: {}
     };
   },
 
@@ -83,9 +95,10 @@ export default {
   //   console.log('created')
   // },
   mounted() {
-    this.$set(this.author, 'name', localStorage.getItem('reviewer'))
-    this.$set(this.author, 'email', localStorage.getItem('e-mail'))
+    this.$set(this.author, "name", localStorage.getItem("reviewer"));
+    this.$set(this.author, "email", localStorage.getItem("e-mail"));
   },
+
   // beforeMount() {
   //   console.log('beforemount')
   // },
@@ -120,6 +133,13 @@ export default {
       this.user.gravatar = emailIsVerified
         ? this.gravatar(this.user.email)
         : null;
+    },
+
+    findReplyContent(id) {
+      let comment = this.comments.find(item => {
+        return item.id === id
+      })
+      return comment  //todo: 这里可用mark解析一下
     },
 
     summit() {
@@ -195,8 +215,10 @@ export default {
     },
 
     reply(comment) {
-      content = "@" + comment.name + ": ";
-      this.replyId = comment._id;
+      console.log("comment", comment,comment.id);
+      this.inputVaule = "@" + comment.author.name + ": ";
+
+      this.replyId = comment.id;
       this.$refs.textBox.focus();
     },
 
@@ -335,14 +357,36 @@ export default {
       margin-top: 1.25rem;
       width: 100%;
       display: flex;
-      flex-wrap: wrap;
-
-      #info {
-        border: 0.0625rem #eee solid;
+      .avatar {
+        width: 3rem;
+        height: 3rem;
         border-radius: 0.3125rem;
-        width: 60%;
+        margin-right: 1rem;
+      }
+      .info-box {
+        border-radius: 0.3125rem;
+        width: 100%;
         padding: 0.625rem;
         color: #666;
+        flex: 1;
+        .reply-box {
+          padding: 0.8rem;
+          margin-bottom: 0.8rem;
+          border: 1px solid #eee;
+          border-radius: 4px;
+          .reply-name {
+            color: #666;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            a {
+              text-decoration: none;
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+          }
+        }
+
         .commentName {
           font-size: 1rem;
           margin-bottom: 0.3125rem;
@@ -356,12 +400,6 @@ export default {
           .index {
             margin-right: 0.5rem;
             color: #999999;
-          }
-          img {
-            width: 3rem;
-            height: 3rem;
-            border-radius: 0.3125rem;
-            margin-right: 1rem;
           }
         }
         .text {
