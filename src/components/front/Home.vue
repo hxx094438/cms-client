@@ -112,6 +112,7 @@ export default {
       articles: state => state.articlesList.articles,
       noMore: state => state.articlesList.noMoreData,
       page: state => state.articlesList.page,
+      pageTotal: state => state.articlesList.pageTotal,
       defaultLimit: state => state.articlesList.defaultLimit,
       curTag: state => state.articlesList.curTag,
       isLoading: state => state.isLoading
@@ -122,7 +123,8 @@ export default {
     ...mapMutations({
       set_headline: "SET_HEADLING",
       set_dialog: "SET_DIALOG",
-      set_curtag: "articlesList/SET_CURTAG"
+      set_curtag: "articlesList/SET_CURTAG",
+      add_page: "articlesList/ADD_PAGE"
     }),
     ...mapActions({ getAllArticles: "articlesList/GET_ALL_ARTICLES" }),
 
@@ -145,9 +147,10 @@ export default {
     },
 
     LoadArticles() {
+      this.add_page()
       this.getAllArticles({
         add: true,
-        page: ++this.page,
+        page: this.page,
         limit: this.defaultLimit
       });
     }

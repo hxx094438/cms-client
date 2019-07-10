@@ -8,7 +8,7 @@ export default {
     pageTotal: 0,
     articles: [],
     noMoreData: false,
-    defaultLimit: 4,
+    defaultLimit: 8,
     article: {},
     tags:[],
     curTag: undefined,
@@ -37,10 +37,12 @@ export default {
 
   mutations: {
     SET_POSTS_BASE_INFO (state, data) {
-      const {total , articles, page} = data
+      const {total , articles, page, limit} = data
       console.log('page', page)
+      state.defaultLimit = limit || state.defaultLimit
+      state.pageTotal = total
       state.articles = articles
-      state.noMoreData = page >= total
+      state.noMoreData = page * limit >= total
       // localStorage.setItem('articles',window.JSON.stringify(articles))
     },
 
@@ -54,6 +56,11 @@ export default {
 
     ADD_ARTICLES(state, articles) {
       state.articles = [...state.articles, ...articles]
+    },
+
+    ADD_PAGE(state) {
+      state.page ++
+      state.noMoreData = state.page * state.defaultLimit >= state.pageTotal
     },
 
     UPDATE_ARTICLE_LIKE(state, payload) {
@@ -81,17 +88,19 @@ export default {
 
   },
   actions: {
+    /**
+     * 
+     * @param {*} param0 
+     * @param {*} params 
+     */
     GET_ALL_ARTICLES ({state, commit}, params) {
-      // console.log('params',params)
+      if(typeof(params.isPublish) === 'undefined') params.isPublish = true
       return model.getAllArticles(params).then( res => {
         const {data, message, code} = res
-        // console.log('all','data:',data.articles,'code:',code)
         if( code === 0) {
-          // console.log('------------------11111111111')
           if(params.add) {
             commit('ADD_ARTICLES',data.articles)
           } else {
-            // console.log('------------------222222222',{...params,...data.articles})
             commit('SET_POSTS_BASE_INFO', {...params,...data})
           }
         }
