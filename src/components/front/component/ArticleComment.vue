@@ -217,7 +217,6 @@ export default {
     reply(comment) {
       console.log("comment", comment,comment.id);
       this.inputVaule = "@" + comment.author.name + ": ";
-
       this.replyId = comment.id;
       this.$refs.textBox.focus();
     },

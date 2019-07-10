@@ -11,7 +11,7 @@ const request = axios.create({
 
 
 function getBaseInfo () {
-  
+
 }
 
 console.log('window', typeof window === 'object', request.baseURL)
@@ -60,6 +60,10 @@ export default {
     return handleRequest(request.get('/articles/all', {
       params: payload
     }))
+  },
+
+  getAllTags(payload) {
+    return handleRequest(request.get('/articles/tags')) 
   },
 
   getArticle(aid) {

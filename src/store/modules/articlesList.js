@@ -1,6 +1,5 @@
-
-
 import model from '../../model/client-model'
+import marked from 'marked'
 
 export default {
   namespaced: true,
@@ -11,8 +10,31 @@ export default {
     noMoreData: false,
     defaultLimit: 4,
     article: {},
+    tags:[],
+    curTag: undefined,
     articlesLikeArr: [], // 子项为文章aid
   },
+
+
+  getters: {
+    reducedArticles: (state) => (articlesList) => {
+      const articles = articlesList.map(article => {
+        //遍历处理已经请求到的articles
+        let newArticle = {};
+        for (let i in article) {
+          newArticle[i] = article[i];
+        }
+        newArticle.content = marked(article.content || '').replace(/<[^>]*>/g, '').slice(0, 200) + '......'
+        return newArticle
+      })
+      return articles
+    },
+
+    allTags: (state) => {
+      return ['全部',...state.tags]
+    },
+  },
+
   mutations: {
     SET_POSTS_BASE_INFO (state, data) {
       const {total , articles, page} = data
@@ -20,6 +42,14 @@ export default {
       state.articles = articles
       state.noMoreData = page >= total
       // localStorage.setItem('articles',window.JSON.stringify(articles))
+    },
+
+    SET_TAGS(state, data) {
+      state.tags = data
+    },
+
+    SET_CURTAG(state, tag) {
+      state.curTags = tag
     },
 
     ADD_ARTICLES(state, articles) {
@@ -52,21 +82,28 @@ export default {
   },
   actions: {
     GET_ALL_ARTICLES ({state, commit}, params) {
-      console.log('params',params)
+      // console.log('params',params)
       return model.getAllArticles(params).then( res => {
         const {data, message, code} = res
-        console.log('all','data:',data.articles,'code:',code)
+        // console.log('all','data:',data.articles,'code:',code)
         if( code === 0) {
-          console.log('------------------11111111111')
+          // console.log('------------------11111111111')
           if(params.add) {
             commit('ADD_ARTICLES',data.articles)
           } else {
-            console.log('------------------222222222',{...params,...data.articles})
-
+            // console.log('------------------222222222',{...params,...data.articles})
             commit('SET_POSTS_BASE_INFO', {...params,...data})
           }
         }
+      })
+    },
 
+    GET_ALL_TAGS({state, commit}, params){
+      return model.getAllTags().then( res => {
+        const {data, code} = res
+        if( code === 0) {
+          commit('SET_TAGS', data)
+        }
       })
     },
 
