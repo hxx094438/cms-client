@@ -110,8 +110,6 @@ export default {
       defaultLimit: state => state.articlesList.defaultLimit,
       curTag: state => state.articlesList.curTag,
       isLoading: state => state.isLoading,
-      userAgent: state => state.userAgent,
-      mobileLayout: state => state.mobileLayout,
     })
   },
   methods: {

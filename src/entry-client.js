@@ -1,9 +1,20 @@
 import Vue from 'vue'
 import createApp from './create-app'
+import { mapState } from "vuex";
 
 
 // a global mixin that calls `asyncData` when a route component's params change
 Vue.mixin({
+  computed:{
+    //公共信息
+    ...mapState({
+      userAgent: state => state.userAgent,
+      mobileLayout: state => state.mobileLayout,
+      documentTitle: state => state.documentTitle,
+      user: state => state.user,
+    })
+  },
+
   beforeRouteUpdate(to, from, next) {
     const {asyncData} = this.$options
     if (asyncData) {

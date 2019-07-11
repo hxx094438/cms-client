@@ -91,9 +91,6 @@ export default {
     };
   },
 
-  // created() {
-  //   console.log('created')
-  // },
   mounted() {
     this.$set(this.author, "name", localStorage.getItem("reviewer"));
     this.$set(this.author, "email", localStorage.getItem("e-mail"));
@@ -195,7 +192,8 @@ export default {
         author: {
           name: this.author.name,
           email: this.author.email
-        }
+        },
+        agent: this.userAgent,
       })
         .then(() => {
           this.inputVaule = "";
