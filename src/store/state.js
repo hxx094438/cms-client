@@ -10,5 +10,8 @@ export default {
       resolveFn:() => {},
       rejectFn:() => {}
     },
-  user: {}
+  user: {},
+  userAgent: '',  // ua
+  mobileLayout: false,  // 是否为移动端
+
 };

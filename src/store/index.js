@@ -9,71 +9,10 @@ import mutations from './mutations.js'
 import back from './modules/back'
 import articlesList from './modules/articlesList'
 import article from './modules/article'
-
-
-
-
 Vue.use(Vuex)
 
 export function createStore() {
   let store = new Vuex.Store({
-    // state: {
-    //   user: {},
-    //   headline: {},
-    //   /**/
-    //   keys: [],
-    //   items: [],
-    //   loading: true,
-    //   pageSize: 9,
-    //   /**/
-
-    //   isLoading:
-    //     false,
-    //   moreArticle:
-    //     true,
-    //   loadMore:
-    //     false,
-    //   isSaving:
-    //     false,
-    //   isSend:
-    //     false,
-    //   noMore:
-    //     false,
-    //   dialog:
-    //     {
-    //       show: false,
-    //       hasTwoBtn:
-    //         false,
-    //       info:
-    //         'hey',
-    //       resolveFn:
-    //         () => {
-    //         },
-    //       rejectFn:
-    //         () => {
-    //         }
-    //     }
-    //   ,
-    //   tags: [],
-    //   curTag:
-    //     '',
-    //   article:
-    //     {}
-    //   ,
-    //   articles: [],
-    //   draft:
-    //     {}
-    //   ,
-    //   drafts: {}
-    //   ,
-    //   pageTotal: '',
-    //   comments:
-    //     [],
-    //   likeArr:
-    //     []
-    //   // comment:{},
-    //   // like:''
-    // },
     state: defaultState,
     getters,
     actions,

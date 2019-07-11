@@ -1,5 +1,14 @@
 export default {
 
+   // 设置UA
+  SET_USER_AGENT(state, payload) {
+    state.userAgent = payload;
+  },
+
+  // 设置是否移动端状态
+  SET_MOBILE_LAYOUT(state, payload) {
+    state.mobileLayout = payload;
+  },
 
   // 对话框
   SET_DIALOG: (state, payload) => {

@@ -95,12 +95,6 @@ export default {
         articleId: route.params.id
       })
     ]);
-    // return store.dispatch("articlesList/GET_ALL_ARTICLES", {
-    //   page: page || 1,
-    //   limit: limit || 8,
-    //   isPublish: true
-    // });
-    // this.getAllTags()
   },
 
   computed: {
@@ -115,7 +109,9 @@ export default {
       pageTotal: state => state.articlesList.pageTotal,
       defaultLimit: state => state.articlesList.defaultLimit,
       curTag: state => state.articlesList.curTag,
-      isLoading: state => state.isLoading
+      isLoading: state => state.isLoading,
+      userAgent: state => state.userAgent,
+      mobileLayout: state => state.mobileLayout,
     })
   },
   methods: {

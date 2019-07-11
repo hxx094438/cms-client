@@ -12,10 +12,7 @@ export default context => {
   return new Promise((resolve, reject) => {
     const s = isDev && Date.now()
     const { app, router, store } = createApp()
-    // console.log('entry-sercer:',typeof context)
-
     const { url } = context
-
     const { fullPath } = router.resolve(url).route
     console.log('fullPath',fullPath,'url',url)
 
@@ -49,9 +46,13 @@ export default context => {
         // console.log('asyncData：',typeof asyncData)
         return asyncData && asyncData({
         store,
-        route: router.currentRoute
+        route: router.currentRoute,
+        //如果在asyncData中去赋值，那每一个asyncData中都需要写赋值操作，太麻烦
+        // userAgent: context.userAgent,   
+        // cookies: context.cookies, 
+        isServer: true,
+        isClient: false
       })
-    
     })).then(() => {
         isDev && console.log(`data pre-fetch: ${Date.now() - s}ms`)
         // After all preFetch hooks are resolved, our store is now
@@ -61,6 +62,8 @@ export default context => {
         // store to pick-up the server-side state without having to duplicate
         // the initial data fetching on the client.
         context.state = store.state
+        store.state.userAgent = context.userAgent
+        store.state.mobileLayout = /(iPhone|iPod|Opera Mini|Android.*Mobile|NetFront|PSP|BlackBerry|Windows Phone)/gi.test(context.userAgent);
         context.meta = app.$meta();
         resolve(app)
       })
