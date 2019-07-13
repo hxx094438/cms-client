@@ -31,6 +31,7 @@
       <article-comment class="comment animated fadeIn"></article-comment>
       <like-bar :article="article"></like-bar>
     </div>
+    <iframe src="https://api.mlwei.com/music/play/?id=004Mkw5K1oI9K9&type=song" width="100%" height="100" frameborder="0" scrolling="no"></iframe>
 
     <router-link :to="{name: 'articles'}" class="iconfont icon-fanhui" tag="i"></router-link>
   </div>

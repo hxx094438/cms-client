@@ -5,7 +5,7 @@
   "author": "hxx094438 <287668256@qq.com>",
   "private": true,
   "scripts": {
-    "dev:client":"cross-env NODE_ENV=development && webpack-dev-server --hot --inline --progress --config build/webpack.dev.conf.js",
+    "dev:client": "cross-env NODE_ENV=development && webpack-dev-server --hot --inline --progress --config build/webpack.dev.conf.js",
     "dev:client-ssr": "cross-env NODE_ENV=development && webpack-dev-server --hot --inline --config build/webpack.client.conf.js",
     "dev:server": "cross-env NODE_ENV=development nodemon ./start.js",
     "dev": "concurrently \"npm run dev:client-ssr\" \"npm run dev:server\"",
@@ -45,6 +45,7 @@
     "mongoose": "^5.4.2",
     "nodemailer": "^4.7.0",
     "on-finished": "^2.3.0",
+    "os": "^0.1.1",
     "particles": "^0.3.1",
     "path": "^0.12.7",
     "ramda": "^0.26.1",

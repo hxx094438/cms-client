@@ -122,7 +122,6 @@ export default {
     GET_ALL_COMMENTS({commit}, payload) {
       return model.getAllComments(payload)
         .then(res => {
-          console.log('------comment',res)
           const {data, code} = res
           if( code === 0) {
             console.log('data',data)

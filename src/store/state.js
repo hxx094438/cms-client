@@ -13,5 +13,7 @@ export default {
   user: {},
   userAgent: '',  // ua
   mobileLayout: false,  // 是否为移动端
+  ip: '',
+  city: '',
 
 };

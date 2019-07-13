@@ -63,6 +63,8 @@ export default context => {
         // the initial data fetching on the client.
         context.state = store.state
         store.state.userAgent = context.userAgent
+        store.state.ip = context.ip
+        store.state.city = context.city
         store.state.mobileLayout = /(iPhone|iPod|Opera Mini|Android.*Mobile|NetFront|PSP|BlackBerry|Windows Phone)/gi.test(context.userAgent);
         context.meta = app.$meta();
         resolve(app)

@@ -12,6 +12,8 @@ Vue.mixin({
       mobileLayout: state => state.mobileLayout,
       documentTitle: state => state.documentTitle,
       user: state => state.user,
+      ip: state => state.ip,
+      city: state => state.city
     })
   },
 

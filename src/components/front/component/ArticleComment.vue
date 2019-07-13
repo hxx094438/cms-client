@@ -194,6 +194,8 @@ export default {
           email: this.author.email
         },
         agent: this.userAgent,
+        ip: this.ip,
+        city: this.city,
       })
         .then(() => {
           this.inputVaule = "";
