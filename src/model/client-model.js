@@ -12,9 +12,7 @@ const request = axios.create({
 })
 
 
-function getBaseInfo () {
 
-}
 
 console.log('window', typeof window === 'object', request.baseURL)
 
@@ -33,22 +31,11 @@ const handleRequest = (request) => {
   return new Promise((resolve, reject) => {
     request.then(resp => {
       const {data, status} = resp
-      // console.log('data',data)
-      if (data.code === 40001) {
-        // 跳转登录页
-      } else {
-        // console.log('data',data)
-        resolve(data)
-        console.log(data.msg)
-        // this.set_dialog({
-        //   info: data.msg,
-        //   hasTwoBtn: false,
-        //   show: true
-        // })
-      }
+      console.log('data',data)
+      resolve(data)
     }).catch(err => {
       // return reject(createError(data.code, data.message))
-      console.log(err)
+      console.log('ERROR:',err)
       // if (resp.status === 401) {
       //   reject(createError(401, 'need auth'))
       // }
@@ -119,16 +106,6 @@ export default {
       return handleRequest(request.patch(`/api/draft/${payload.aid}`, payload.draft))
     } else {
       return handleRequest(request.post(`/api/draft/`, payload.draft))
-
-      /*     return Vue.http.post('/api/draft/', state.article)/!*
-             .then(() => {
-               commit('isSaving_toggle', true)
-               router.push({name: 'drafts'})
-             }, () => {
-               alert('保存失败')
-             }).catch((err) => {
-               console.log(err)
-             })*!/*/
     }
   },
 

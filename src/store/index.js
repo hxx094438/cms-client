@@ -24,6 +24,7 @@ export function createStore() {
     }
   })
 
+
   if (module.hot) {
     module.hot.accept([
       './state',

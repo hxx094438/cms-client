@@ -9,21 +9,17 @@ import { sync } from 'vuex-router-sync'
 
 
 
-// import Notification from './components/notification'
-// import Tabs from './components/tabs'
 import './assets/css/index.scss'
 
-// import './assets/styles/global.styl'
 import axios from 'axios'
 import dialog from '../src/modules/dialog'
-
+import toast from '../src/components/toast/toast'
 axios.defaults.withCredentials = true
 Vue.prototype.$http = axios
 
-Vue.use(Meta);
+Vue.use(Meta)
 Vue.use(dialog)
-
-
+Vue.use(toast)
 
 Vue.filter('toDate', (date) => {
   if (date) {
@@ -80,9 +76,7 @@ Vue.filter('textLineBreak', (text, maxLength, lineBreakMode) => {
 
 Vue.use(VueRouter)
 Vue.use(Vuex)
-// Vue.use(Meta)
-// Vue.use(Notification)
-// Vue.use(Tabs)
+
 
 export default () => {
   const router = createRouter()

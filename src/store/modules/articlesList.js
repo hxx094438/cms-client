@@ -103,6 +103,8 @@ export default {
           } else {
             commit('SET_POSTS_BASE_INFO', {...params,...data})
           }
+        } else {
+
         }
       })
     },
