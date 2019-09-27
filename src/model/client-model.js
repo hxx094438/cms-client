@@ -7,10 +7,24 @@ const baseUrl = 'http://127.0.0.1:3002/api'
 // const store = createStore()
 // console.log('baseUrl',baseUrl)
 axios.defaults.withCredentials = true
+
+
+
 const request = axios.create({
   baseURL: baseUrl
 })
 
+request.interceptors.request.use(
+  config => {
+    if(config.method === 'get') {
+      config.params && (config.params = JSON.stringify(config.params))
+    }
+    return config
+  },
+  err => {
+    return Promise.reject(err)
+  }
+)
 
 
 
@@ -26,7 +40,6 @@ const handleRequest = (request) => {
   // const isMobile = /(iPhone|iPod|Opera Mini|Android.*Mobile|NetFront|PSP|BlackBerry|Windows Phone)/gi.test(userAgent);
   // store.commit('SET_MOBILE_LAYOUT', isMobile);
   // store.commit('SET_USER_AGENT', userAgent);
-
   // console.log('baseUrl', baseUrl)
   return new Promise((resolve, reject) => {
     request.then(resp => {
@@ -55,7 +68,6 @@ export default {
   },
 
   getAllArticles(payload) {
-    console.log('------------payload', payload)
     return handleRequest(request.get('/articles/all', {
       params: payload
     }))
