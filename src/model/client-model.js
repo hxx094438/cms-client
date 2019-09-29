@@ -1,11 +1,8 @@
 import axios from 'axios'
 import {createError} from './util'
-// import { createStore } from '../store'
-
 // const baseUrl = typeof window === 'object' ? '/api' : 'http://127.0.0.1:3002/api'
 const baseUrl = 'http://127.0.0.1:3002/api'
-// const store = createStore()
-// console.log('baseUrl',baseUrl)
+
 axios.defaults.withCredentials = true
 
 
@@ -31,16 +28,6 @@ request.interceptors.request.use(
 console.log('window', typeof window === 'object', request.baseURL)
 
 const handleRequest = (request) => {
-  //todo:只能在serverRender时去设置，因为需要获取到来自远程的请求头部，现在的问题时serverRender时如何获取到store
-  //或者在server-entry中获取到请求头
-  // console.log('process',process)
-  // const isServer = process && process.server;
-  // console.log('isServerisServer',isServer)
-  // const userAgent = isServer ? req.headers['user-agent'] : navigator.userAgent;
-  // const isMobile = /(iPhone|iPod|Opera Mini|Android.*Mobile|NetFront|PSP|BlackBerry|Windows Phone)/gi.test(userAgent);
-  // store.commit('SET_MOBILE_LAYOUT', isMobile);
-  // store.commit('SET_USER_AGENT', userAgent);
-  // console.log('baseUrl', baseUrl)
   return new Promise((resolve, reject) => {
     request.then(resp => {
       const {data, status} = resp

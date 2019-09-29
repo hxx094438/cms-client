@@ -37,20 +37,16 @@ serverCompiler.watch({}, (err, stats) => {
 });
 
 const handleSSR = async (ctx) => {
-  console.log('bundle',typeof bundle)
   if (!bundle) {
     // 服务刚启动的时候bundle打包会非常慢
     ctx.body = 'Waiting a moment for bundle generating';
     return;
   }
-  console.log('请求本地manifest-----1')
   const clientManifestResp = await axios.get(
     'http://127.0.0.1:8083/dist/vue-ssr-client-manifest.json'
   );
-  console.log('请求本地manifest-----2',typeof clientManifestResp)
 
   const clientManifest = clientManifestResp.data;
-  console.log('clientManifest',typeof clientManifest)
   // 使用EJS作为模板渲染
   const template = fs.readFileSync(
     path.join(__dirname, '../server.template.ejs'),

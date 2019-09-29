@@ -24,6 +24,10 @@ export default {
     })
     return articles
   },
+
+  isMobile: (state) => {
+    return /(iPhone|iPod|Opera Mini|Android.*Mobile|NetFront|PSP|BlackBerry|Windows Phone)/gi.test(state.userAgent)
+  }
   // allTags: (state) => {
   //     state.tags.unshift('全部')
   //     return state.tags

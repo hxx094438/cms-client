@@ -100,7 +100,7 @@ export default {
   computed: {
     ...mapGetters({
       reducedArticles: "articlesList/reducedArticles",
-      allTags: "articlesList/allTags"
+      allTags: "articlesList/allTags",
     }),
     ...mapState({
       articles: state => state.articlesList.articles,
@@ -113,7 +113,6 @@ export default {
     })
   },
   methods: {
-    //            ...mapMutations(['set_headline', 'set_dialog']),
     ...mapMutations({
       set_headline: "SET_HEADLING",
       set_dialog: "SET_DIALOG",
