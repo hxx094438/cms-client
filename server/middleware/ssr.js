@@ -74,6 +74,11 @@ const render = async (ctx) => {
 }
 
 export default (app) => {
+  const staticPath = '/dist'
+  console.log('pathpath', path.join(__dirname, staticPath))
+  app.use(serve(
+    path.join(__dirname + staticPath)
+  ))
 if (isDev) {
   // In development: setup the dev server with watch and hot-reload,
   // and create a new renderer on bundle / index template update.
@@ -97,11 +102,7 @@ if (isDev) {
 
 // console.log('readyPromise赋值',readyPromise.then(()=>{console.log('123132123123123')}))
 
-const staticPath = '../../dist'
-console.log('pathpath', path.join(__dirname, staticPath))
-app.use(serve(
-  path.join(__dirname, staticPath)
-))
+
 
 const router = new Router()
 router.get('/*', async (ctx, next) => {

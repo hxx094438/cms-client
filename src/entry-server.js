@@ -9,6 +9,11 @@ console.log('入口文件')
 // Since data fetching is async, this function is expected to
 // return a Promise that resolves to the app instance.
 export default context => {
+  /**
+   * context即是在server-render.js中renderer.renderToString()方法传入的context
+   * 可以给这个context赋其他的属性值
+   *
+   */
   return new Promise((resolve, reject) => {
     const s = isDev && Date.now()
     const { app, router, store } = createApp()
@@ -20,6 +25,12 @@ export default context => {
       console.log('静态资源路径')
       return
     }
+
+    // if(fullPath.indexOf('/dist') > -1) {
+    //   console.log('dist静态资源路径')
+    //   return
+    // }
+
     if (fullPath !== url) {
       return reject({ url: fullPath })
     }
@@ -28,7 +39,6 @@ export default context => {
     console.log('entry server------------')
     // wait until router has resolved possible async hooks
     router.onReady(() => {
-    
       const matchedComponents = router.getMatchedComponents()
       // console.log('matchedComponents','url',url,matchedComponents,matchedComponents.length)
       // no matched routes

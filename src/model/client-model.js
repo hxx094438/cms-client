@@ -30,7 +30,7 @@ console.log('window', typeof window === 'object', request.baseURL)
 const handleRequest = (request) => {
   return new Promise((resolve, reject) => {
     request.then(resp => {
-      const {data, status} = resp
+      const {data, status, code} = resp
       console.log('data',data)
       resolve(data)
     }).catch(err => {

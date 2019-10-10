@@ -2,27 +2,27 @@
 const path = require('path')
 const utils = require('./utils')
 const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const isDev = process.env.NODE_ENV === 'development'
 console.log('isDev',isDev)
 
-const defaultPlugin = !isDev
-  ? [
-    new webpack.optimize.UglifyJsPlugin({
-      compress: { warnings: false }
-    }),
-    new webpack.optimize.ModuleConcatenationPlugin(),
-    new ExtractTextPlugin({
-      filename: 'common.[chunkhash].css'
-    })
-  ]
-  :
-  [
-    new FriendlyErrorsPlugin()
-  ]
+// const defaultPlugin = !isDev
+//   ? [
+//     new webpack.optimize.UglifyJsPlugin({
+//       compress: { warnings: false }
+//     }),
+//     new webpack.optimize.ModuleConcatenationPlugin(),
+//     new ExtractTextPlugin({
+//       filename: 'common.[chunkhash].css'
+//     })
+//   ]
+//   :
+//   [
+//     new FriendlyErrorsPlugin()
+//   ]
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -118,7 +118,7 @@ module.exports = {
   },
 
   plugins: [
-    ...defaultPlugin,
+    // ...defaultPlugin,
     new VueLoaderPlugin(),
   ]
 }
