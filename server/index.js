@@ -35,11 +35,7 @@ const useMiddlewares = (app) => {
   )(MIDDLEWARES)
 }
 
-const staticPath = '../dist'
-console.log('pathpath', path.join(__dirname, staticPath))
-app.use(serve(
-  path.join(__dirname + staticPath)
-))
+
 
 ;(async function () {
   /**
@@ -71,6 +67,11 @@ app.use(async (ctx, next) => {
     await next();
   }
 });
+
+const staticPath = '../../dist'
+app.use(serve(
+  path.join(__dirname + staticPath)
+))
   
   app.use(pageRouter.routes()).use(pageRouter.allowedMethods());
   
