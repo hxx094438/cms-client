@@ -35,7 +35,7 @@ const router = new Router({
     routes: [
         {
             path: '/',
-            redirect: 'home',
+            redirect: '/home',
             component: index,
             children: [
                 {path: 'home', name: 'home', component: Home, meta: {title: '博客首页'}},

@@ -12,7 +12,7 @@ export default context => {
   return new Promise((resolve, reject) => {
     const s = isDev && Date.now()
     const { app, router, store } = createApp()
-    const { url } = context
+    let { url } = context
     const { fullPath } = router.resolve(url).route
     console.log('fullPath',fullPath,'url',url)
 
@@ -20,6 +20,9 @@ export default context => {
       console.log('静态资源路径')
       return
     }
+
+    if(url === '/') url = '/home'
+
     if (fullPath !== url) {
       return reject({ url: fullPath })
     }

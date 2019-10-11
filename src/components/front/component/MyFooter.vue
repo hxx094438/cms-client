@@ -3,7 +3,7 @@
         <a href="https://segmentfault.com" class="iconfont icon-iconsf"></a>
         <a class="iconfont icon-github" href="https://github.com/hxx094438"></a>
         <a href="http://www.facebook.com" class="iconfont icon-cion15"></a>
-        <p>湘ICP备17018968号</p>
+        <p>湘ICP备19020180号</p>
         <p>Copyright © Hxx | <router-link :to="{name: 'login'}" tag="span" class="login">admin</router-link></p>
     </div>
 </template>
