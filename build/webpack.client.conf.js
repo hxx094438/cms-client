@@ -5,11 +5,12 @@ const baseWebpackConfig = require('./webpack.base.conf')
 const SWPrecachePlugin = require('sw-precache-webpack-plugin')
 const VueClientPlugin = require('vue-server-renderer/client-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const isDev = process.env.NODE_ENV === 'development'
 
 const devServer = {
-  port: process.env.PORT || 8083,
+  port: process.env.PORT || 8084,
   host: '0.0.0.0',
   overlay: {
     errors: true
@@ -45,36 +46,42 @@ let webpackConfig = merge(baseWebpackConfig, {
       hints:false    // 去掉 超过250kb文件的warn提示
     },      
     plugins: [
-      new VueClientPlugin(),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
         'process.env.VUE_ENV': '"client"'
       }),
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
-        filename: 'client-vendor-bundle.js',
-        minChunks: function (module) {
-          // a module is extracted into the vendor chunk if...
-          return (
-            // it's inside node_modules
-            /node_modules/.test(module.context) &&
-            // and not a CSS file (due to extract-text-webpack-plugin limitation)
-            !/\.css$/.test(module.request)
-          )
-        }
+      new ExtractTextPlugin({
+        filename: 'common.[chunkhash].css'
       }),
-
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'manifest'
+      new webpack.optimize.UglifyJsPlugin({
+        compress: { warnings: false }
       }),
-      new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
-      new HtmlWebpackPlugin({
-        filename: 'index.html',
-        template: 'index.html',
-        inject: true
-      }),
-      new webpack.NoEmitOnErrorsPlugin(),
-      // https://github.com/ampedandwired/html-webpack-plugin
+      // new webpack.optimize.CommonsChunkPlugin({
+      //   name: 'vendor',
+      //   filename: 'client-vendor-bundle.js',
+      //   minChunks: function (module) {
+      //     // a module is extracted into the vendor chunk if...
+      //     return (
+      //       // it's inside node_modules
+      //       /node_modules/.test(module.context) &&
+      //       // and not a CSS file (due to extract-text-webpack-plugin limitation)
+      //       !/\.css$/.test(module.request)
+      //     )
+      //   }
+      // }),
+      //
+      // new webpack.optimize.CommonsChunkPlugin({
+      //   name: 'manifest',
+      //   chunks: ['vendor']
+      // }),
+      // new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
+      // new HtmlWebpackPlugin({
+      //   filename: 'index.html',
+      //   template: 'index.html',
+      //   inject: true
+      // }),
+      // new webpack.NoEmitOnErrorsPlugin(),
+      new VueClientPlugin(),
     ]
   })
 

@@ -11,13 +11,13 @@ const path = require('path');
 import R from 'ramda'
 import chalk from 'chalk'
 import config from './config/index'
-// import serve from 'koa-static'
+import serve from 'koa-static'
 
 const staticRouter = require('./routers/static');
 
-
-const MIDDLEWARES = ['static']
 const isDev = process.env.NODE_ENV === 'development';
+
+const MIDDLEWARES = isDev ? ['static'] : []
 
 const app = new Koa()
 
@@ -36,13 +36,14 @@ const useMiddlewares = (app) => {
 }
 
 
+
 ;(async function () {
   /**
    * 将config注入中间件的ctx
    * */
   // app.context.config = config
 
-  await useMiddlewares(app)  
+  await useMiddlewares(app)
 
 
   let pageRouter;
@@ -66,6 +67,11 @@ app.use(async (ctx, next) => {
     await next();
   }
 });
+
+const staticPath = '../../dist'
+app.use(serve(
+  path.join(__dirname + staticPath)
+))
   
   app.use(pageRouter.routes()).use(pageRouter.allowedMethods());
   
