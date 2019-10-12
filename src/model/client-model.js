@@ -1,7 +1,9 @@
 import axios from 'axios'
 import {createError} from './util'
+const isDev = process.env.NODE_ENV !== 'production'
+
 // const baseUrl = typeof window === 'object' ? '/api' : 'http://127.0.0.1:3002/api'
-const baseUrl = 'http://127.0.0.1:3002/api'
+const baseUrl = isDev ? 'http://127.0.0.1:3002/api' : `http://shawsen.site`
 
 axios.defaults.withCredentials = true
 
