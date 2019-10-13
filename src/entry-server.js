@@ -26,7 +26,7 @@ export default context => {
       return
     }
 
-    if(url === '/') url = '/home'
+    if(url === '/' && !isDev) url = '/home'
 
     if (fullPath !== url) {
       return reject({ url: fullPath })
