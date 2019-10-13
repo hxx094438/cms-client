@@ -6,8 +6,6 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-const isDev = process.env.NODE_ENV === 'development'
-console.log('isDev',isDev)
 
 // const defaultPlugin = !isDev
 //   ? [
@@ -28,6 +26,14 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
+// console.log(isDev,'path',isDev ? '/dist/' : '/')
+// const isDev = process.env.NODE_ENV === 'development'
+// console.log('process.env.NODE_ENV',process.env.NODE_ENV,process.env.NODE_ENV === 'development', isDev) 
+// const p = isDev ? '/' : '/dist/'
+
+// const ppb = '/'
+// console.log('ppb',ppb)
+console.log('process.env.NODE_ENV',process.env.NODE_ENV,process.env)
 module.exports = {
 
   // context: path.resolve(__dirname, '../'),
