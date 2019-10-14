@@ -5,7 +5,7 @@
   "author": "hxx094438 <287668256@qq.com>",
   "private": true,
   "scripts": {
-    "dev:client": "cross-env NODE_ENV=development && webpack-dev-server --hot --inline --config build/webpack.client.dev.conf.js",
+    "dev:client": "cross-env NODE_ENV=development webpack-dev-server --hot --inline --config build/webpack.client.conf.js",
     "dev:server": "cross-env NODE_ENV=development nodemon ./start.js",
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
     "start": "cross-env NODE_ENV=production nodemon ./start.js",

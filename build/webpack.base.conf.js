@@ -26,20 +26,14 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-// console.log(isDev,'path',isDev ? '/dist/' : '/')
-// const isDev = process.env.NODE_ENV === 'development'
-// console.log('process.env.NODE_ENV',process.env.NODE_ENV,process.env.NODE_ENV === 'development', isDev) 
-// const p = isDev ? '/' : '/dist/'
+const isDev = process.env.NODE_ENV === 'development'
 
-// const ppb = '/'
-// console.log('ppb',ppb)
-console.log('process.env.NODE_ENV',process.env.NODE_ENV,process.env)
 module.exports = {
 
   // context: path.resolve(__dirname, '../'),
   output: {
     path: path.resolve(__dirname, '../dist'),
-    publicPath: '/',
+    publicPath: isDev ? '/dist/' : '/',
     filename: '[name].js'
   },
 

@@ -4,13 +4,13 @@ const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const SWPrecachePlugin = require('sw-precache-webpack-plugin')
 const VueClientPlugin = require('vue-server-renderer/client-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const isDev = process.env.NODE_ENV === 'development'
 
-const devServer = {
+const devServer = isDev ? {
   port: process.env.PORT || 8084,
+  publicPath: '/dist/',
   host: '0.0.0.0',
   overlay: {
     errors: true
@@ -21,7 +21,7 @@ const devServer = {
   },
   hot: true,
   disableHostCheck: true // 允许任何host域名访问
-};
+} : {};
 
 
 let webpackConfig = merge(baseWebpackConfig, {
