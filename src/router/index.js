@@ -44,24 +44,24 @@ const router = new Router({
                 {path: 'search/:text', name: 'SearchResult', component: SearchResult, meta: {title: '搜索结果'}}
             ]
         },
-        {
-            path: '/login',
-            name: 'login',
-            component: login,
-            meta: {title: '登录页面'}
-        },
-        {
-            path: '/admin',
-            redirect: 'admin/posts',
-            component: admin,
-            children: [
-                {path: 'posts', name: 'posts', component: posts, meta: {requireAuth: true, title: '博客文章'}},
-                {path: 'editor', name: 'editor', component: editor, meta: {requireAuth: true, title: '博客编辑'}},
-                {path: 'drafts', name: 'drafts', component: drafts, meta: {requireAuth: true, title: '博客草稿'}},
-                {path: 'search', name: 'search', component: search, meta: {requireAuth: true, title: '搜索结果'}},
-                {path: 'account', name: 'account', component: account, meta: {requireAuth: true, title: '修改账户'}}
-            ]
-        }
+        // {
+        //     path: '/login',
+        //     name: 'login',
+        //     component: login,
+        //     meta: {title: '登录页面'}
+        // },
+        // {
+        //     path: '/admin',
+        //     redirect: 'admin/posts',
+        //     component: admin,
+        //     children: [
+        //         {path: 'posts', name: 'posts', component: posts, meta: {requireAuth: true, title: '博客文章'}},
+        //         {path: 'editor', name: 'editor', component: editor, meta: {requireAuth: true, title: '博客编辑'}},
+        //         {path: 'drafts', name: 'drafts', component: drafts, meta: {requireAuth: true, title: '博客草稿'}},
+        //         {path: 'search', name: 'search', component: search, meta: {requireAuth: true, title: '搜索结果'}},
+        //         {path: 'account', name: 'account', component: account, meta: {requireAuth: true, title: '修改账户'}}
+        //     ]
+        // }
     ],
 })
 
