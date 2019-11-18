@@ -2,7 +2,6 @@ import createApp from './create-app'
 import chalk from 'chalk';
 
 const isDev = process.env.NODE_ENV !== 'production'
-console.log('入口文件')
 // This exported function will be called by `bundleRenderer`.
 // This is where we perform data-prefetching to determine the
 // state of our application before actually rendering it.
@@ -37,7 +36,6 @@ export default context => {
     // wait until router has resolved possible async hooks
     router.onReady(() => {
       const matchedComponents = router.getMatchedComponents()
-      // console.log('matchedComponents','url',url,matchedComponents,matchedComponents.length)
       // no matched routes
       if (!matchedComponents.length) {
         return reject({ 
@@ -45,15 +43,12 @@ export default context => {
           msg: `异常路由：${url}`
          })
       }
-      // console.log('matchedComponents:',matchedComponents.map((item) => {
-      //   {}
-      // }))
+   
       // Call fetchData hooks on components matched by the route.
       // A preFetch hook dispatches a store action and returns a Promise,
       // which is resolved when the action is complete and store state has been
       // updated.
       Promise.all(matchedComponents.map(({ asyncData }) => {
-        // console.log('asyncData：',typeof asyncData)
         return asyncData && asyncData({
         store,
         route: router.currentRoute,
@@ -79,16 +74,9 @@ export default context => {
         context.meta = app.$meta();
         resolve(app)
       })
-      // .catch(resolve(app))  
-
-      // 为什么不能这么写，和直接resolve(app有什么区别？)
       .catch(error => {
         console.log(chalk.red('AsyncData Error Caused URL '), context.url);
         console.log(chalk.red('AsyncData Error Caused '), error);
-        // 这里需要处理请求失败的情况，可能是没有权限
-        // if(erro
-        
-
         context.state = store.state;
         resolve(app);
       })
