@@ -40,7 +40,10 @@ export default context => {
       // console.log('matchedComponents','url',url,matchedComponents,matchedComponents.length)
       // no matched routes
       if (!matchedComponents.length) {
-        return reject({ code: 404 })
+        return reject({ 
+          code: 404,
+          msg: `异常路由：${url}`
+         })
       }
       // console.log('matchedComponents:',matchedComponents.map((item) => {
       //   {}
