@@ -32,7 +32,7 @@
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "lru-cache": "^5.1.1",
-    "marked": "^0.3.19",
+    "marked": "^4.0.10",
     "os": "^0.1.1",
     "particles": "^0.3.1",
     "path": "^0.12.7",
